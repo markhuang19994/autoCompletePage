@@ -37,14 +37,9 @@ const waitCondition = func => {
     });
 };
 
-const waitSelectHasValue = (id, value) =>
-    waitCondition(() =>
-        Array.from(document.querySelectorAll(`#${id} option`)).some(e => e.value === value)
-    );
+const waitSelectHasValue = (id, value) => Array.from(document.querySelectorAll(`#${id} option`)).some(e => e.value === value);
 
-const waitElementLoaded = id => {
-    waitCondition(() => !!document.getElementById(id));
-};
+const waitElementLoaded = id => !!document.getElementById(id);
 
 const jsonStringifyWithFunction = objWithFunction => {
     return JSON.stringify(objWithFunction, function (key, val) {
