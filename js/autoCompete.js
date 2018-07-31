@@ -7,7 +7,7 @@ $(async function () {
     let allPageData = window['allPageData'];
     let pageData = allPageData[window.location.href];
 
-    if(window['isNeedAutoComplete']){
+    if (window['isNeedAutoComplete']) {
         completeData(pageData);
     }
 
@@ -99,22 +99,26 @@ $(async function () {
     window.generalPageData = (nowPage) => {
         let genData = {};
         genData[nowPage] = {};
+        console.group('unSupportElement');
         Array.from(document.querySelectorAll('input, select')).forEach(e => {
             genData[nowPage][e.id] = {};
-            if (e.type === 'text' || e.tagName === 'SELECT') {
-                genData[nowPage][e.id]['val'] = e.value || '';
+            if (e.id !== '' && (e.type === 'text' || e.tagName === 'SELECT')) {
+                if (e.value) {
+                    genData[nowPage][e.id]['val'] = e.value;
+                }
                 if (e.tagName === 'SELECT') {
                     genData[nowPage][e.id]['trig'] = 'change';
                 }
-            } else if (e.type === 'checkbox' || e.type === 'radio') {
+            } else if (e.id !== '' && (e.type === 'checkbox' || e.type === 'radio')) {
                 if (e.checked) {
                     genData[nowPage][e.id]['act'] = 'click';
                 }
             } else {
                 delete genData[nowPage][e.id];
-                console.info('unSupportElement: ', e);
+                console.info(e);
             }
         });
+        console.groupEnd();
         return genData;
     };
 

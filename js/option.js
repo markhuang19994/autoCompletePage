@@ -61,7 +61,7 @@
         });
 
         $('#export-autocomplete-urls').click(async e => {
-            const {needCompletePages} = await getStorageData('allPageDataStr');
+            const {needCompletePages} = await getStorageData('needCompletePages');
             download('autoPagesURL.json', JSON.stringify(JSON.parse(needCompletePages || "[]"), null, '\t'));
         });
 

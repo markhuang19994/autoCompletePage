@@ -19,7 +19,7 @@
             const {needCompletePages} = await getStorageData('needCompletePages');
             let isNeedAutoComplete = isPageNeedAutoComplete(tab.url, needCompletePages);
             chrome.tabs.executeScript(tabId, {
-                code: `let isNeedAutoComplete = ${isNeedAutoComplete}`
+                code: `window.isNeedAutoComplete = ${isNeedAutoComplete}`
             });
 
             const {allPageDataStr} = await getStorageData('allPageDataStr');
