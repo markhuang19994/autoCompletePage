@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>auto complete extension</title>
+    <link rel="stylesheet" href="css/vendor/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/option.css">
+    <script src="js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="js/vendor/jquery-ui.min.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/storageUtil.js"></script>
+    <script src="js/option.js"></script>
+</head>
+<body>
+<h1>選項設定頁</h1>
+<hr>
+<ul>
+    <li>
+        <span class="slider-trigger">設定擴充支援頁面</span>
+        <div class="setting-content slider">
+            <ul>
+                <li class="setting-support-page">
+                    <span class="slider-trigger">設定支援頁面</span>
+                    <div class="slider">
+                        <ul>
+                            <li>
+                                <span>說明:</span><br/>
+                                <p>
+                                    設定擴充功能生效的頁面，需填入希望生效的頁面的網址的正則表示<br/>
+                                    Ex1：.*xxx.com.tw.*&nbsp;=>&nbsp;對xxx相關的網站生效，<br/>
+                                    Ex2：.*localhost.* &nbsp;&nbsp;&nbsp;=>&nbsp;只會在local測試時生效。<br/>
+                                    由於我懶得寫UI，所以只有給一個input欄位 ^_^，格式如: .*xxx.com.tw.*, .*localhost.*
+                                </p>
+                            </li>
+                            <li>
+                                <label for="support-url">網址: </label>
+                                <input type="text" id="support-url" spellcheck="false">
+                                <button id="support-url-commit">確認</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="setting-support-page">
+                    <span class="slider-trigger">設定自動填入資料頁面</span>
+                    <div class="slider">
+                        <ul>
+                            <li>
+                                <span>說明:</span><br/>
+                                <p>
+                                    填入頁面的完整網址，在頁面載入後會自動填入資料。<br/>
+                                    Ex1：https://www.google.com <br/>
+                                    Ex2：http://localhost:5487/extfunc87/data/query?name=Kram <br/>
+                                </p>
+                            </li>
+                            <li>
+                                <label for="complete-url"> 網址:</label>
+                                <input type="text" id="complete-url" spellcheck="false">
+                                <button id="complete-url-commit">確認</button>
+                            </li>
+                            <li>
+                                <span class="slider-trigger">匯入/匯出所有自動填寫頁</span>
+                                <div class="slider">
+                                    <ul>
+                                        <li>
+                                            <span>匯入格式範例: </span><br/>
+                                            <pre>[</pre>
+                                            <pre>   "http://xxx.com.tw",</pre>
+                                            <pre>   "http://localhost:5487/extfunc87/page/index",</pre>
+                                            <pre>   ...</pre>
+                                            <pre>]</pre>
+                                        </li>
+                                        <li>
+                                            <span>匯入資料:</span>
+                                            <label for="import-autocomplete-urls"></label>
+                                            <input type="file" id="import-autocomplete-urls"/>
+                                        </li>
+                                        <li>
+                                            <span>匯出資料:</span>
+                                            <button id="export-autocomplete-urls">匯出</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <span class="slider-trigger">設定頁面參數</span>
+        <div class="setting-content slider">
+            <ul>
+                <li>
+                    <span class="slider-trigger">json格式</span>
+                    <div class="slider">
+                        <ul>
+                            <li>
+                                <span class="slider-trigger">說明</span><br/>
+                                <div class="slider">
+                                    <div>
+                                        <p>
+                                            在底下輸入框填入頁面的json描述檔，程式會依照描述檔在頁面自動填入參數。<br/>
+                                            Example:<br/>
+                                        </p>
+                                        <pre> 'custName': {                                               //欄位id</pre>
+                                        <br/>
+                                        <pre>      val: '綠多藍',                                         //欄位值</pre>
+                                        <br/>
+                                        <pre>      act: 'click',                                          //元素會執行動作，並trigger對應的事件</pre>
+                                        <br/>
+                                        <pre>      trig: 'change',                                        //trigger事件</pre>
+                                        <br/>
+                                        <pre>      func: #{() => console.log(123)},                       //執行函式</pre>
+                                        <br/>
+                                        <pre>      bindKey: ['shiftKey + q', #{() => console.log(213)}],  //[綁定按鍵,觸發時執行的函式],只支持shiftKey,ctrlKey,altKey,A-z0-9,其餘按鍵請打ascii編號</pre>
+                                        <br/>
+                                        <pre>      wait: () => #{$('#xxx').val() === 'ooo'},              //一個函數回傳true/false(會一直執行,等到回傳true才會繼續動作)</pre>
+                                        <br/>
+                                        <pre>      pause: 1000                                            //暫停固定毫秒後進行下一個動作</pre>
+                                        <br/>
+                                        <pre> }</pre>
+                                        <br/>
+                                        <ul class="decimal-style">
+                                            <li>要執行的Function必須使用#{}包起來，不然會被當成文字。</li>
+                                            <li>function內要用'(單引號)代替"(雙引號)，不然會解析失敗。</li>
+                                            <li>
+                                                不需要的參數可以不填，比如 'justRunSomeFunction' : {func:#{() => console.log(123)}}
+                                            </li>
+                                            <li>執行順序: 設定val => 執行動作 => 觸發事件 => 執行函式 => 等待條件完成 => 暫停固定秒數</li>
+                                            <li>
+                                                <span class="slider-trigger">細項</span>
+                                                <div class="slider">
+                                                    <ul>
+                                                        <li>
+                                                            act: click,
+                                                            blur等element可以呼叫的函數，即document.getElementById('id').act是個函數
+                                                        </li>
+                                                        <li>
+                                                            trig: change, click等event，如需觸發keydown之類的，可以另外傳入設定值如；trig:
+                                                            "keydown, {which:13, shiftKey:true}"
+                                                        </li>
+                                                        <li>
+                                                            func: 由於json的限制，函數只能寫成一行，如: function
+                                                            doSomeThing(someThing){if(typeof someThing === 'function')
+                                                            doSomeThing();}
+                                                        </li>
+                                                        <li>
+                                                            wait: 本選項有兩個內建函數:
+                                                            <ul>
+                                                                <li>
+                                                                    等待sel有值: waitSelectHasValue(id, value)，使用方法wait:
+                                                                    "#{() => waitSelectHasValue('目標元素id', '等待出現的值')}"
+                                                                </li>
+                                                                <li>
+                                                                    等待元素出現: waitElementLoaded(id)，使用方法: wait: "#{() =>
+                                                                    waitElementLoaded('目標元素id')}"
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <label for="page-json-url"> 頁面網址:</label>
+                                <input type="text" id="page-json-url" spellcheck="false">
+                                <br/>
+                            </li>
+                            <li>
+                                <div class="page-json">
+                                    <label for="page-json_textarea">JSON:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <textarea id="page-json_textarea" spellcheck="false"></textarea>
+                                </div>
+                                <div id="page-json-commit_div">
+                                    <button id="page-json-commit">確認</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <span class="slider-trigger">查詢已有的頁面資料</span>
+                    <div class="slider">
+                        <ul>
+                            <li>
+                                <span>頁面網址:</span>
+                                <label for="get-page-data"></label>
+                                <input type="text" id="get-page-data"/>
+                                <button id="page-data-commit">查詢</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <span class="slider-trigger">匯入/匯出所有頁面資料</span>
+                    <div class="slider">
+                        <ul>
+                            <li>
+                                <span>匯入格式範例: </span><br/>
+                                <pre>   {</pre>
+                                <pre>       "www.xxx.com": {</pre>
+                                <pre>           "field1": {</pre>
+                                <pre>           "val": "xxx",</pre>
+                                <pre>           "trig": "click"</pre>
+                                <pre>           }</pre>
+                                <pre>       }</pre>
+                                <pre>   }</pre>
+                            </li>
+                            <li>
+                                <span>匯入資料:</span>
+                                <label for="import-all-page-data"></label>
+                                <input type="file" id="import-all-page-data"/>
+                            </li>
+                            <li>
+                                <span>匯出資料:</span>
+                                <button id="export-all-page-data">匯出</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="other-setting">
+        <span class="slider-trigger">其他設定</span>
+        <div class="setting-content slider">
+            <img class="working-img" src="./image/working.png" alt="施工中">
+            <span>將javascript注入指定頁面...施工中</span>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

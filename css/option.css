@@ -1,0 +1,80 @@
+h1 {
+    font-size: 1.6rem;
+}
+
+pre {
+    margin: -.2rem 0 -.2rem 0;
+}
+
+input {
+    width: 80%;
+}
+
+textarea {
+    width: 80%;
+    height: 800px;
+}
+
+ul > li {
+    margin: 16px 0 16px 0;
+    font-size: 1.2rem;
+}
+
+.setting-content > li {
+    margin: 16px 0 16px 0;
+    font-size: 1rem;
+}
+
+.slider {
+    display: none;
+}
+
+.other-setting .working-img {
+    width: 5rem;
+    display: block;
+}
+
+.page-json {
+    display: flex;
+    align-items: baseline;
+}
+
+.page-json > label[for=page-json_textarea] {
+    display: inline-flex;
+    margin-top: 1rem;
+}
+
+#page-json-commit_div {
+    text-align: center;
+}
+
+.slider-trigger:after {
+    background-image: url('../image/Right-Arrow-PNG-HD.png');
+    background-size: 1rem;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    transition: transform 300ms ease;
+    content: "";
+}
+
+.slider-action:after {
+    transform: rotate(90deg);
+    transition: transform 300ms ease;
+}
+
+.decimal-style {
+    list-style: decimal-leading-zero;
+}
+
+.print-message {
+    width: 92%;
+    margin-top: 4px;
+    color: #dc0800;
+}
+
+#import-autocomplete-urls, #export-autocomplete-urls,
+#import-all-page-data, #export-all-page-data {
+    font-size: 1rem;
+    margin-left: 6px;
+}
