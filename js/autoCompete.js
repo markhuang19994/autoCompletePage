@@ -19,7 +19,7 @@ $(async function () {
 
                 const val = field['val'];
                 if (val) {
-                    ele.value = val;
+                    ele.value = typeof val === 'function' ? val() : val;
                 }
 
                 const action = field['act'];
@@ -34,14 +34,14 @@ $(async function () {
 
                 const execFunction = field['func'];
                 if (execFunction) {
-                    execFunction.apply(ele || this);
+                    execFunction();
                 }
 
                 const bindKey = field['bindKey'];
                 if (bindKey) {
                     let keys = bindKey[0].replace(/\s/g, '').split('+');
 
-                    $(document).on('keydown', (e) => {
+                    $(document).on('keydown', e => {
                         let isMatch = true;
                         keys.forEach(key => {
                             if (key === 'shiftKey' || key === 'ctrlKey' || key === 'altKey') {
@@ -51,9 +51,8 @@ $(async function () {
                                 isMatch = e.which === code;
                             }
                         });
-                        isMatch && bindKey[1].apply(ele || this);
+                        isMatch && bindKey[1]();
                     });
-
                 }
 
                 const waitFunc = field['wait'];
