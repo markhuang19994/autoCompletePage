@@ -9,7 +9,7 @@
             if (!isSupportPage(tab.url, urlWhiteList)) {
                 return;
             }
-            chrome.browserAction.setIcon({path: './image/icon.png'})
+            chrome.browserAction.setIcon({path: './image/icon.png'});
             chrome.browserAction.enable(tabId);
 
             chrome.tabs.executeScript(tabId, {file: "./js/storageUtil.js"});

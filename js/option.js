@@ -8,21 +8,16 @@
             $('input, textarea').attr("spellcheck", false);
             letTextAreaCanKeyTab();
             const allProjectData = await getAllProjectData();
-            $('#projectName').autocomplete({
-                source: Object.keys(allProjectData || {}),
-                minLength: 0
-            }).focus(function () {
-                $(this).autocomplete('search', $(this).val());
-            });
+            autoCompleteWithZeroLength('#projectName',allProjectData);
+            autoCompleteWithZeroLength('#del-project-data',allProjectData);
         })();
 
         $('#projectName').change(async e => {
             projectName = e.currentTarget.value === '' ? 'none' : e.currentTarget.value;
             const allProjectData = await getAllProjectData();
             const allPageData = allProjectData[projectName]['allPageData'] || {};
-            $('#get-page-data').autocomplete({source: Object.keys(allPageData), minLength: 0}).focus(function () {
-                $(this).autocomplete('search', $(this).val());
-            });
+            autoCompleteWithZeroLength('#get-page-data',allPageData);
+            autoCompleteWithZeroLength('#del-project-data',allProjectData);
         });
 
         $('.slider-trigger').click(e => {
@@ -126,6 +121,19 @@
             download('allPageData.json', JSON.stringify(allProjectData[projectName]['allPageData'], null, '\t'));
         });
 
+        $('#del-project-data-commit').click(async e => {
+            const allProjectData = await getAllProjectData();
+            let projectName = $('#del-project-data').val().replace(/\s/g, '');
+            if (allProjectData[projectName]) {
+                delete allProjectData[projectName];
+                setStorageData({allProjectData: JSON.stringify(allProjectData)});
+                autoCompleteWithZeroLength('#projectName',allProjectData);
+                setMessageAfterElement(e, '專案已成功刪除');
+            } else {
+                setMessageAfterElement(e, '無此專案');
+            }
+        });
+
         $('#export-all-project-data').click(async () => {
             download('allPageData.json', JSON.stringify(await getAllProjectData(), null, '\t'));
         });
@@ -158,6 +166,15 @@
                 }
             }
             return newJsonObj;
+        }
+
+        function autoCompleteWithZeroLength(selector, obj){
+            $(selector).autocomplete({
+                source: Object.keys(obj || {}),
+                minLength: 0
+            }).focus(function () {
+                $(this).autocomplete('search', $(this).val());
+            });
         }
 
         async function getAllProjectData() {
