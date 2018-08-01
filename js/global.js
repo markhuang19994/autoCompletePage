@@ -72,7 +72,7 @@ const download = (filename, text) => {
     document.body.removeChild(e);
 };
 
-const textAreaWithTabKey = () => {
+const letTextAreaCanKeyTab = () => {
     //text area with tab from https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea #user1949974
     let textareas = document.getElementsByTagName('textarea');
     let count = textareas.length;

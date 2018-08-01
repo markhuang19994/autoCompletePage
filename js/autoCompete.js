@@ -4,8 +4,7 @@
  */
 $(async function () {
     //目前allPageData由background.js取得後直接放入全域變數,因為chrome.tabs.executeScript可以直接eval function
-    let allPageData = window['allPageData'];
-    let pageData = allPageData[window.location.href];
+    let pageData = window['pageData'];
 
     if (window['isNeedAutoComplete']) {
         completeData(pageData);

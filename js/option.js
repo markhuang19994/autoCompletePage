@@ -2,16 +2,28 @@
     $(async function () {
         console.log('option.js is loaded!');
         const {getStorageData, setStorageData} = window.storageUtil;
-        const {allPageDataStr} = await getStorageData('allPageDataStr');
-        const allPageData = allPageDataStr ? JSON.parse(allPageDataStr) : {};
+        let projectName = 'none';
 
-        (() => {//page init
+        (async () => {//page init
             $('input, textarea').attr("spellcheck", false);
+            letTextAreaCanKeyTab();
+            const allProjectData = await getAllProjectData();
+            $('#projectName').autocomplete({
+                source: Object.keys(allProjectData || {}),
+                minLength: 0
+            }).focus(function () {
+                $(this).autocomplete('search', $(this).val());
+            });
+        })();
+
+        $('#projectName').change(async e => {
+            projectName = e.currentTarget.value === '' ? 'none' : e.currentTarget.value;
+            const allProjectData = await getAllProjectData();
+            const allPageData = allProjectData[projectName]['allPageData'] || {};
             $('#get-page-data').autocomplete({source: Object.keys(allPageData), minLength: 0}).focus(function () {
                 $(this).autocomplete('search', $(this).val());
             });
-            textAreaWithTabKey();
-        })();
+        });
 
         $('.slider-trigger').click(e => {
             $(e.currentTarget).toggleClass('slider-action');
@@ -27,30 +39,32 @@
             });
         });
 
-        $('#support-url-commit').click(e => {
+        $('#support-url-commit').click(async e => {
             let urlPatterns = $('#support-url').val();
             let patternsArrStr = stringWithCommaToArrayString(urlPatterns);
+            let message = `已設定pattern: ${patternsArrStr}`;
+
             setStorageData({urlWhiteList: patternsArrStr});
-
-            let message = `已設定pattern: ${patternsArrStr}`;
             setMessageAfterElement(e, message);
         });
 
-        $('#complete-url-commit').click(e => {
+        $('#complete-url-commit').click(async e => {
+            let allProjectData = await getAllProjectData();
             let urlPatterns = $('#complete-url').val();
-            let patternsArrStr = stringWithCommaToArrayString(urlPatterns);
-            setStorageData({needCompletePages: patternsArrStr});
+            let patternsArrayString = stringWithCommaToArrayString(urlPatterns);
+            let message = `已設定pattern: ${patternsArrayString}`;
 
-            let message = `已設定pattern: ${patternsArrStr}`;
+            allProjectData[projectName]['needCompletePages'] = JSON.parse(patternsArrayString);
+            setStorageData({allProjectData: JSON.stringify(allProjectData)});
             setMessageAfterElement(e, message);
         });
 
-        $('#import-autocomplete-urls').change(e => {
-            readFileAsText(e.delegateTarget.files[0]).then(result => {
+        $('#import-autocomplete-urls').change(async e => {
+            readFileAsText(e.delegateTarget.files[0]).then(async result => {
                 try {
-                    const needCompletePagesArr = JSON.parse(result);
-                    const needCompletePages = JSON.stringify(needCompletePagesArr);
-                    setStorageData({needCompletePages});
+                    let allProjectData = await getAllProjectData();
+                    allProjectData[projectName]['needCompletePages'] = JSON.parse(result);
+                    setStorageData({allProjectData: JSON.stringify(allProjectData)});
                     setMessageAfterElement(e, `檔案儲存成功`);
                 } catch (err) {
                     setMessageAfterElement(e, `檔案轉換失敗，原因: ${err.toString()}`);
@@ -60,14 +74,18 @@
             });
         });
 
-        $('#export-autocomplete-urls').click(async e => {
-            const {needCompletePages} = await getStorageData('needCompletePages');
-            download('autoPagesURL.json', JSON.stringify(JSON.parse(needCompletePages || "[]"), null, '\t'));
+        $('#export-autocomplete-urls').click(async () => {
+            let allProjectData = await getAllProjectData();
+            let needCompletePages = allProjectData[projectName]['needCompletePages'];
+            download('autoPagesURL.json', JSON.stringify(needCompletePages || [], null, '\t'));
         });
 
         $('#page-json-commit').click(async e => {
+            let allProjectData = await getAllProjectData();
+            let allPageData = allProjectData[projectName]['allPageData'];
+
             let url = $('#page-json-url').val();
-            let pageData = validateAndParseJsonString($('#page-json').val());
+            let pageData = validateAndParseJsonString($('#page-json_textarea').val());
             if (typeof pageData !== 'object') {
                 setMessageAfterElement(e, 'json格式有誤');
                 return;
@@ -75,23 +93,25 @@
             let isCover = allPageData[url];
             allPageData[url] = pageData;
 
-            const allPageDataStr = JSON.stringify(allPageData);
-            setStorageData({allPageDataStr});
+            allProjectData[projectName]['allPageData'] = allPageData;
+            setStorageData({allProjectData: JSON.stringify(allProjectData)});
             setMessageAfterElement(e, isCover ? `已覆蓋${url}的資料` : `${url}已新增資料`);
         });
 
-        $('#page-data-commit').click(e => {
-            let data = JSON.stringify(allPageData[$('#get-page-data').val()], null, '\t');
+        $('#page-data-commit').click(async e => {
+            let allProjectData = await getAllProjectData();
+            let url = $('#get-page-data').val();
+            let data = JSON.stringify(allProjectData[projectName]['allPageData'][url] || {}, null, '\t');
             setMessageAfterElement(e, '資料:  ' + data + '...易讀的format在console');
             console.log(data)
         });
 
-        $('#import-all-page-data').change(e => {
-            readFileAsText(e.delegateTarget.files[0]).then(result => {
+        $('#import-all-page-data').change(async e => {
+            readFileAsText(e.delegateTarget.files[0]).then(async result => {
                 try {
-                    const allPageData = JSON.parse(result);
-                    const allPageDataStr = JSON.stringify(allPageData);
-                    setStorageData({allPageDataStr});
+                    let allProjectData = await getAllProjectData();
+                    allProjectData[projectName]['allPageData'] = JSON.parse(result);
+                    setStorageData({allProjectData: JSON.stringify(allProjectData)});
                     setMessageAfterElement(e, `檔案儲存成功`);
                 } catch (err) {
                     setMessageAfterElement(e, `檔案轉換失敗，原因: ${err.toString()}`);
@@ -101,9 +121,9 @@
             });
         });
 
-        $('#export-all-page-data').click(async e => {
-            const {allPageDataStr} = await getStorageData('allPageDataStr');
-            download('allPageData.json', JSON.stringify(JSON.parse(allPageDataStr || "{}"), null, '\t'));
+        $('#export-all-page-data').click(async () => {
+            const allProjectData = await getAllProjectData();
+            download('allPageData.json', JSON.stringify(allProjectData[projectName]['allPageData'], null, '\t'));
         });
 
         function stringWithCommaToArrayString(str) {
@@ -133,6 +153,19 @@
                 }
             }
             return newJsonObj;
+        }
+
+        async function getAllProjectData() {
+            return new Promise(async res => {
+                let {allProjectData} = await getStorageData('allProjectData');
+                let allProjectDataObj = allProjectData ? JSON.parse(allProjectData) : {};
+                res($.extend(true, {}, {
+                    [projectName]: {
+                        needCompletePages: {},
+                        allPageData: {}
+                    }
+                }, allProjectDataObj));
+            });
         }
     });
 })(jQuery);

@@ -78,3 +78,17 @@ ul > li {
     font-size: 1rem;
     margin-left: 6px;
 }
+
+.important_li {
+    list-style: none;
+}
+
+.important_li:before {
+    content: '\2605';
+    position: relative;
+    right: -1px;
+    bottom: 3px;
+    margin-left: -19px;
+    color: red;
+    font-size: 1rem;
+}
