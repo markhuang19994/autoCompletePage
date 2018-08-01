@@ -74,9 +74,18 @@ ul > li {
 }
 
 #import-autocomplete-urls, #export-autocomplete-urls,
-#import-all-page-data, #export-all-page-data {
+#import-all-page-data, #export-all-page-data,
+#export-all-project-data {
     font-size: 1rem;
     margin-left: 6px;
+}
+
+button#import-autocomplete-urls, button#export-autocomplete-urls,
+button#import-all-page-data, button#export-all-page-data,
+button#export-all-project-data {
+    border: .5px solid;
+    border-radius: 6px;
+    font-family: inherit;
 }
 
 .important_li {
@@ -91,4 +100,16 @@ ul > li {
     margin-left: -19px;
     color: red;
     font-size: 1rem;
+}
+
+#all-project-data-export {
+    padding-bottom: 5px;
+}
+
+#page-json-commit {
+    margin-top: 12px;
+}
+
+#page-json-commit_div .print-message {
+    width: 100%;
 }

@@ -102,7 +102,7 @@
             let allProjectData = await getAllProjectData();
             let url = $('#get-page-data').val();
             let data = JSON.stringify(allProjectData[projectName]['allPageData'][url] || {}, null, '\t');
-            setMessageAfterElement(e, '資料:  ' + data + '...易讀的format在console');
+            setMessageAfterElement(e, '資料:  ' + data, '...易讀的format在console');
             console.log(data)
         });
 
@@ -126,16 +126,21 @@
             download('allPageData.json', JSON.stringify(allProjectData[projectName]['allPageData'], null, '\t'));
         });
 
+        $('#export-all-project-data').click(async () => {
+            download('allPageData.json', JSON.stringify(await getAllProjectData(), null, '\t'));
+        });
+
         function stringWithCommaToArrayString(str) {
             let strArr = str.replace(/\s/g, '').split(',');
             return JSON.stringify(strArr);
         }
 
-        function setMessageAfterElement(e, msg) {
+        function setMessageAfterElement(e, ...msg) {
+            let allMsg = msg.join('<br/>');
             if (e.currentTarget.nextElementSibling) {
-                e.currentTarget.nextElementSibling.innerHTML = msg;
+                e.currentTarget.nextElementSibling.innerHTML = allMsg;
             } else {
-                $(e.currentTarget).after(`<p class="print-message">${msg}</p>`)
+                $(e.currentTarget).after(`<p class="print-message">${allMsg}</p>`)
             }
         }
 

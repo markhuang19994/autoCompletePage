@@ -67,11 +67,11 @@
     }
 
     function printSquare() {
-        console.log("%c", "padding:64px 300px;line-height:120px;background:url('https://media.giphy.com/media/x5Iz2cPx6MA80/giphy.gif') no-repeat;background-size: 120px;height: 220px;");
+        console.log("%c ", "padding:5px 50px;line-height:120px;background:url('https://media.giphy.com/media/x5Iz2cPx6MA80/giphy.gif') no-repeat;background-size: 120px;height: 120px;");
     }
 
     function getPageDataAndNeedCompletePageFromAllProjectData(allProjectData, pageURL) {
-        let result = {pageData: {}, needCompletePages: {}};
+        let result = {pageData: {}, needCompletePages: []};
         let allProjectDataObj = allProjectData ? JSON.parse(allProjectData) : {};
         Object.keys(allProjectDataObj).forEach(projectData => {
             let projectInfo = allProjectDataObj[projectData];
@@ -80,7 +80,7 @@
                     let allPageData = projectInfo[info];
                     Object.keys(allPageData).forEach(url => {
                         if (pageURL === url) {
-                            result.pageData = allPageData[url];
+                            result.pageData = allPageData[url] || {};
                             result.needCompletePages = projectInfo['needCompletePages'] || [];
                         }
                     })

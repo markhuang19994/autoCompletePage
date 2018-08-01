@@ -34,7 +34,7 @@
                             <li>
                                 <span>說明:</span><br/>
                                 <p>
-                                    設定擴充功能生效的頁面，需填入希望生效的頁面的網址的正則表示<br/>
+                                    設定擴充功能生效的頁面，避免對瀏覽其他網站造成額外運算負擔，需填入希望生效的頁面的網址的正則表示式<br/>
                                     Ex1：.*xxx.com.tw.*&nbsp;=>&nbsp;對xxx相關的網站生效，<br/>
                                     Ex2：.*localhost.* &nbsp;&nbsp;&nbsp;=>&nbsp;只會在local測試時生效。<br/>
                                     由於我懶得寫UI，所以只有給一個input欄位 ^_^，格式如: .*xxx.com.tw.*, .*localhost.*
@@ -56,38 +56,13 @@
                                 <span>說明:</span><br/>
                                 <p>
                                     填入頁面的完整網址，在頁面載入後會自動填入資料。<br/>
-                                    Ex1：https://www.google.com <br/>
-                                    Ex2：http://localhost:5487/extfunc87/data/query?name=Kram <br/>
+                                    Ex：https://www.google.com, http://localhost:5487/extfunc87/data/query?name=Kram,... <br/>
                                 </p>
                             </li>
                             <li>
                                 <label for="complete-url"> 網址:</label>
                                 <input type="text" id="complete-url" spellcheck="false">
                                 <button id="complete-url-commit">確認</button>
-                            </li>
-                            <li>
-                                <span class="slider-trigger">匯入/匯出所有自動填寫頁</span>
-                                <div class="slider">
-                                    <ul>
-                                        <li>
-                                            <span>匯入格式範例: </span><br/>
-                                            <pre>[</pre>
-                                            <pre>   "http://xxx.com.tw",</pre>
-                                            <pre>   "http://localhost:5487/extfunc87/page/index",</pre>
-                                            <pre>   ...</pre>
-                                            <pre>]</pre>
-                                        </li>
-                                        <li>
-                                            <span>匯入資料:</span>
-                                            <label for="import-autocomplete-urls"></label>
-                                            <input type="file" id="import-autocomplete-urls"/>
-                                        </li>
-                                        <li>
-                                            <span>匯出資料:</span>
-                                            <button id="export-autocomplete-urls">匯出</button>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                         </ul>
                     </div>
@@ -108,7 +83,7 @@
                                 <div class="slider">
                                     <div>
                                         <p>
-                                            在底下輸入框填入頁面的json描述檔，程式會依照描述檔在頁面自動填入參數。<br/>
+                                            在底下輸入框填入頁面的json參數，程式會依照此參數決定在頁面要做什麼事情。<br/>
                                             Example:<br/>
                                         </p>
                                         <pre> 'custName': {                                               //欄位id</pre>
@@ -203,6 +178,37 @@
                         </ul>
                     </div>
                 </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <span class="slider-trigger">匯入與匯出資料</span>
+        <div class="setting-content slider">
+            <ul>
+                <li>
+                    <span class="slider-trigger">匯入/匯出所有自動資料填寫頁</span>
+                    <div class="slider">
+                        <ul>
+                            <li>
+                                <span>匯入格式範例: </span><br/>
+                                <pre>[</pre>
+                                <pre>   "http://xxx.com.tw",</pre>
+                                <pre>   "http://localhost:5487/extfunc87/page/index",</pre>
+                                <pre>   ...</pre>
+                                <pre>]</pre>
+                            </li>
+                            <li>
+                                <span>匯入資料:</span>
+                                <label for="import-autocomplete-urls"></label>
+                                <input type="file" id="import-autocomplete-urls"/>
+                            </li>
+                            <li>
+                                <span>匯出資料:</span>
+                                <button id="export-autocomplete-urls">匯出</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li>
                     <span class="slider-trigger">匯入/匯出所有頁面資料</span>
                     <div class="slider">
@@ -212,8 +218,8 @@
                                 <pre>   {</pre>
                                 <pre>       "www.xxx.com": {</pre>
                                 <pre>           "field1": {</pre>
-                                <pre>           "val": "xxx",</pre>
-                                <pre>           "trig": "click"</pre>
+                                <pre>               "val": "xxx",</pre>
+                                <pre>               "trig": "click"</pre>
                                 <pre>           }</pre>
                                 <pre>       }</pre>
                                 <pre>   }</pre>
@@ -226,6 +232,17 @@
                             <li>
                                 <span>匯出資料:</span>
                                 <button id="export-all-page-data">匯出</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <span  class="slider-trigger all-project-data">所有專案資料</span>
+                    <div class="slider">
+                        <ul class="all-project-data_ul">
+                            <li id="all-project-data-export">
+                                <span>匯出資料:</span>
+                                <button id="export-all-project-data">匯出</button>
                             </li>
                         </ul>
                     </div>
