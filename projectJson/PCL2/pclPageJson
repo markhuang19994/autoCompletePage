@@ -1,0 +1,312 @@
+{
+	"http://localhost:8090/extfunc02/page/index": {
+		"ino": {
+			"val": "A117463321"
+		},
+		"cno": {
+			"val": "4563180400000002"
+		},
+		"p": {
+			"bindKey": [
+				"13",
+				"#{() => $('#p').click()}"
+			]
+		}
+	},
+	"http://localhost:8090/extfunc02/page/step1?_ar=1": {
+		"agr": {
+			"act": "click"
+		},
+		"otp": {
+			"val": "111111"
+		},
+		"sendbtn": {
+			"bindKey": [
+				"13",
+				"#{() => $('#sendbtn').click()}"
+			]
+		}
+	},
+	"http://localhost:8090/extfunc02/page/step2-1?_ar=1": {
+		"runFunc": {
+			"func": "#{() =>　$('.custom-close').click()}"
+		},
+		"condFlg": {
+			"val": "0"
+		},
+		"alarm": {},
+		"fprgm": {
+			"val": "BP089"
+		},
+		"famt": {
+			"val": "91,000"
+		},
+		"ftenor": {
+			"val": "24"
+		},
+		"ffee": {
+			"val": "2,999"
+		},
+		"frate1": {
+			"val": "3.8"
+		},
+		"frate2": {},
+		"ftenor1": {},
+		"ftenor2": {},
+		"fapr": {
+			"val": "15.3"
+		},
+		"fexpf": {
+			"val": "11,500"
+		},
+		"fexpl": {
+			"val": "39,000"
+		},
+		"fexp2": {
+			"val": "0"
+		},
+		"fcond": {
+			"val": "『限制提前清償』"
+		},
+		"loanCondCD": {
+			"val": "0"
+		},
+		"reSelect": {},
+		"productType": {
+			"val": "CRB"
+		},
+		"fcustomerApplyAmt": {
+			"val": "599,000"
+		},
+		"fisExistCRB": {
+			"val": "true"
+		},
+		"titleCRB": {
+			"act": "click"
+		},
+		"prg3": {
+			"act": "click"
+		},
+		"prg4": {},
+		"titlePCL": {},
+		"prg1": {},
+		"prg2": {},
+		"agrBox": {
+			"act": "click"
+		},
+		"actcd": {
+			"val": "7777777",
+			"pause":1500
+		},
+		"runFunc2": {
+			"func": "#{() =>　{$('.mfp-close').click()}}"
+		},
+		"sendbtn": {
+			"bindKey": [
+				"13",
+				"#{() => $('#sendbtn').click()}"
+			]
+		}
+	},
+	"http://localhost:8090/extfunc02/page/step3?_ar=1": {
+		"runFunc": {
+			"func": "#{() =>　$('.custom-close').click()}"
+		},
+		"fullmandAccount": {},
+		"prevBankCode": {
+			"trig": "change"
+		},
+		"prevBranchCode": {
+			"trig": "change"
+		},
+		"prevAccountNo": {},
+		"otherAccount": {
+			"act": "click"
+		},
+		"otherAccountTitle": {
+			"val": "004-台灣銀行",
+			"trig": "change",
+			"wait": "#{() => waitSelectHasValue('otherBranchCode', '0071-館前分行')}"
+		},
+		"otherBranchCode": {
+			"val": "0071-館前分行",
+			"trig": "change"
+		},
+		"otherAccountNumber": {
+			"val": "777777777777"
+		},
+		"paytax": {},
+		"expenses": {
+			"act": "click"
+		},
+		"decoration": {},
+		"tuition": {},
+		"travel": {},
+		"marrage": {},
+		"finance": {},
+		"jobNC": {
+			"act": "click"
+		},
+		"jobC": {},
+		"jobN": {},
+		"citicus": {},
+		"fileType": {
+			"trig": "change"
+		},
+		"fileInput": {},
+		"emailBill": {
+			"act": "click"
+		},
+		"selfnm": {
+			"val": "蔡測試"
+		},
+		"selfid": {
+			"val": "A117463321"
+		},
+		"spousenm": {},
+		"spouseid": {},
+		"fathernm": {},
+		"fatherid": {},
+		"mothernm": {},
+		"motherid": {},
+		"other1title": {
+			"trig": "change"
+		},
+		"other1nm": {},
+		"other1id": {},
+		"other2title": {
+			"trig": "change"
+		},
+		"other2nm": {},
+		"other2id": {},
+		"other3title": {
+			"trig": "change"
+		},
+		"other3nm": {},
+		"other3id": {},
+		"other4title": {
+			"trig": "change"
+		},
+		"other4nm": {},
+		"other4id": {},
+		"biznm1": {},
+		"bizid1": {},
+		"bizjob1": {},
+		"bizmemo1": {},
+		"biznm2": {},
+		"bizid2": {},
+		"bizjob2": {},
+		"bizmemo2": {},
+		"biznm3": {},
+		"bizid3": {},
+		"bizjob3": {},
+		"bizmemo3": {},
+		"sbiznm1": {},
+		"sbizid1": {},
+		"sbizjob1": {},
+		"sbizmemo1": {},
+		"sbiznm2": {},
+		"sbizid2": {},
+		"sbizjob2": {},
+		"sbizmemo2": {},
+		"sbiznm3": {},
+		"sbizid3": {},
+		"sbizjob3": {},
+		"sbizmemo3": {},
+		"citicd": {"pause":1500},
+		"runFunc2": {
+			"func": "#{() =>　{$('.mfp-close').click()}}"
+		},
+		"sendbtn": {
+			"bindKey": [
+				"13",
+				"#{() => $('#sendbtn').click()}"
+			]
+		}
+	},
+	"http://localhost:8090/extfunc02/page/step3-1?_ar=1": {
+		"agrBox": {
+			"act": "click",
+			"pause": 1500
+		},
+		"runFunc2": {
+			"func": "#{() =>　{$('.mfp-close').click()}}"
+		},
+		"sendbtn": {
+			"bindKey": [
+				"13",
+				"#{() => $('#sendbtn').click()}"
+			]
+		}
+	},
+	"http://localhost:8090/extfunc02/page/step4?_ar=1": {
+		"term1to4": {
+			"act": "click"
+		},
+		"terms2": {
+			"act": "click"
+		},
+		"terms4": {
+			"act": "click"
+		},
+		"terms5": {
+			"act": "click"
+		},
+		"terms13": {
+			"act": "click"
+		},
+		"terms15": {
+			"act": "click"
+		},
+		"terms16": {
+			"act": "click"
+		},
+		"terms20": {
+			"act": "click"
+		},
+		"terms22": {
+			"act": "click"
+		},
+		"terms25": {
+			"act": "click"
+		},
+		"terms26": {
+			"act": "click"
+		},
+		"check_year": {
+			"val": "107",
+			"trig": "change",
+			"wait": "#{() => waitSelectHasValue('check_month', '5')}"
+		},
+		"check_month": {
+			"val": "5",
+			"trig": "change",
+			"wait": "#{() => waitSelectHasValue('check_day', '6')}"
+		},
+		"check_day": {
+			"val": "6",
+			"trig": "change"
+		},
+		"rname": {"pause":1500},
+		"runFunc2": {
+			"func": "#{() =>　{$('.mfp-close').click()}}"
+		},
+		"sendbtn": {
+			"bindKey": [
+				"13",
+				"#{() => $('#sendbtn').click()}"
+			]
+		}
+	},
+	"http://localhost:8090/extfunc02/page/step5?_ar=1": {
+		"otp": {
+			"val": "111111"
+		},
+		"sendbtn": {
+			"bindKey": [
+				"13",
+				"#{() => $('#sendbtn').click()}"
+			]
+		}
+	}
+}

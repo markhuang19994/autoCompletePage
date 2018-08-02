@@ -1,0 +1,9 @@
+[
+	"http://localhost:8090/extfunc02/page/index",
+	"http://localhost:8090/extfunc02/page/step1?_ar=1",
+	"http://localhost:8090/extfunc02/page/step2-1?_ar=1",
+	"http://localhost:8090/extfunc02/page/step3?_ar=1",
+	"http://localhost:8090/extfunc02/page/step3-1?_ar=1",
+	"http://localhost:8090/extfunc02/page/step4?_ar=1",
+	"http://localhost:8090/extfunc02/page/step5?_ar=1"
+]

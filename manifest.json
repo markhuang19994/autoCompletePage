@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "自動填寫頁面表單",
   "description": "點我可以把頁面加入自動填寫的清單",
-  "version": "2.01",
+  "version": "2.11",
   "browser_action": {
     "default_title": "emosdnah si kraM",
     "default_icon": "./image/icon_gray.png"
