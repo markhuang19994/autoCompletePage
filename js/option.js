@@ -8,16 +8,16 @@
             $('input, textarea').attr("spellcheck", false);
             letTextAreaCanKeyTab();
             const allProjectData = await getAllProjectData();
-            autoCompleteWithZeroLength('#projectName',allProjectData);
-            autoCompleteWithZeroLength('#del-project-data',allProjectData);
+            autoCompleteWithZeroLength('#projectName', allProjectData);
+            autoCompleteWithZeroLength('#del-project-data', allProjectData);
         })();
 
-        $('#projectName').change(async e => {
+        $('#projectName').on('change autocompletechange', async e => {
             projectName = e.currentTarget.value === '' ? 'none' : e.currentTarget.value;
             const allProjectData = await getAllProjectData();
             const allPageData = allProjectData[projectName]['allPageData'] || {};
-            autoCompleteWithZeroLength('#get-page-data',allPageData);
-            autoCompleteWithZeroLength('#del-project-data',allProjectData);
+            autoCompleteWithZeroLength('#get-page-data', allPageData);
+            autoCompleteWithZeroLength('#del-project-data', allProjectData);
         });
 
         $('.slider-trigger').click(e => {
@@ -127,7 +127,7 @@
             if (allProjectData[projectName]) {
                 delete allProjectData[projectName];
                 setStorageData({allProjectData: JSON.stringify(allProjectData)});
-                autoCompleteWithZeroLength('#projectName',allProjectData);
+                autoCompleteWithZeroLength('#projectName', allProjectData);
                 setMessageAfterElement(e, '專案已成功刪除');
             } else {
                 setMessageAfterElement(e, '無此專案');
@@ -168,7 +168,7 @@
             return newJsonObj;
         }
 
-        function autoCompleteWithZeroLength(selector, obj){
+        function autoCompleteWithZeroLength(selector, obj) {
             $(selector).autocomplete({
                 source: Object.keys(obj || {}),
                 minLength: 0
@@ -183,7 +183,7 @@
                 let allProjectDataObj = allProjectData ? JSON.parse(allProjectData) : {};
                 res($.extend(true, {}, {
                     [projectName]: {
-                        needCompletePages: {},
+                        needCompletePages: [],
                         allPageData: {}
                     }
                 }, allProjectDataObj));
