@@ -73,6 +73,7 @@ $(async function () {
     }
 
     $(document).on('keydown', e => {
+        window.ctrlKey = e.ctrlKey;
         if (e.ctrlKey && e.shiftKey && e.which === 'A'.codePointAt(0)) {
             completeData(pageData);
         }
@@ -83,6 +84,8 @@ $(async function () {
             sessionStorage.removeItem('isAutoRun');
         }
     });
+
+    $(document).on('keyUp', e => window.ctrlKey = e.ctrlKey);
 
     (function autoRun() {
         if (sessionStorage.getItem('isAutoRun')) {
@@ -95,12 +98,15 @@ $(async function () {
     })();
 
     window.generalPageData = (nowPage) => {
-        let genData = {};
-        genData[nowPage] = {};
+        let genData = {[nowPage]: {}};
+        let supportInputType = ['text', 'password'];
+        if (window.ctrlKey) {
+            supportInputType.push('hidden');
+        }
         console.group('unSupportElement');
         Array.from(document.querySelectorAll('input, select')).forEach(e => {
             genData[nowPage][e.id] = {};
-            if (e.id !== '' && (e.type === 'text' || e.tagName === 'SELECT')) {
+            if (e.id !== '' && (supportInputType.includes(e.type) || e.tagName === 'SELECT')) {
                 if (e.value) {
                     genData[nowPage][e.id]['val'] = e.value;
                 }
