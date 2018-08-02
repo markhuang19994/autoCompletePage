@@ -1,0 +1,396 @@
+{
+  "http://localhost:8031/extfunc31/page/index": {
+    "custId": {
+      "val": "M123456789"
+    },
+    "BIRTH": {
+      "val": "19800101"
+    },
+    "sendbtn":{
+      "bindKey": ["13", "#{() => $('#sendbtn').click()}"]
+    }
+  },
+  "http://localhost:8031/extfunc31/page/step1?_ar=1": {
+    "custName": {
+      "val": "大中天"
+    },
+    "custMobile": {
+      "val": "0987878787"
+    },
+    "check_stu": {},
+    "check_stu1": {
+      "act": "click",
+      "func": "#{() => $('.check_stu').removeClass('validate[required]')}"
+    },
+    "workInfo": {
+      "val": "1"
+    },
+    "yearInc": {
+      "val": "94878745"
+    },
+    "COMP_NO_C": {
+      "val": ""
+    },
+    "loan": {
+      "val": "948787"
+    },
+    "creditCyc": {
+      "val": "874545"
+    },
+    "moneyCard": {
+      "val": "8177818"
+    },
+    "sendbtn":{
+      "bindKey": ["13", "#{() => $('#sendBtn').click()}"]
+    }
+  },
+  "http://localhost:8031/extfunc31/page/step2?_ar=1": {
+    "applyAmount": {
+      "val": "87",
+      "trig": "change"
+    },
+    "monthlyPayment": {
+      "val": "25,178"
+    },
+    "lastlyPayment": {
+      "val": "25,183"
+    },
+    "apr": {
+      "val": "2.91"
+    },
+    "fee": {
+      "val": "2999"
+    },
+    "rateProject_1": {
+      "act": "click"
+    },
+    "rateProject_4": {},
+    "tenor_1": {},
+    "tenor_2": {
+      "act": "click"
+    },
+    "tenor_3": {},
+    "tenor_4": {},
+    "tenor_5": {},
+    "tenor_6": {},
+    "s2_agree1": {
+      "act": "click"
+    },
+    "s2_agree2": {
+      "act": "click"
+    },
+    "s2_agree3": {
+      "act": "click"
+    },
+    "sendbtn":{
+      "bindKey": ["13", "#{() => $('#sendBauBtn').click()}"]
+    }
+  },
+  "http://localhost:8031/extfunc31/page/step4?_ar=1": {
+    "runFunc": {
+      "func": "#{() => $('.icon-plus').click()}",
+      "pause": 500
+    },
+    "custName": {
+      "val": "大中天"
+    },
+    "custId": {
+      "val": "M123456789"
+    },
+    "ENG_NAM_2": {
+      "val": "LEE"
+    },
+    "ENG_NAM": {
+      "val": "SIN"
+    },
+    "custBirYear": {
+      "val": "87"
+    },
+    "custBirMon": {
+      "val": "3"
+    },
+    "custBirDay": {
+      "val": "25"
+    },
+    "custSexM": {
+      "act": "click"
+    },
+    "custSexF": {},
+    "MARITAL_STATUS": {
+      "act": "click"
+    },
+    "MARITAL_STATUS1": {},
+    "MARITAL_STATUS2": {},
+    "HOME_TEL_AREA": {
+      "val": "03"
+    },
+    "HOME_TEL_TEXT": {
+      "val": "28825252"
+    },
+    "custMobile": {
+      "val": "0987878787"
+    },
+    "custMail": {
+      "val": "zxc81906@gmail.com"
+    },
+    "ELE_SCHOOL": {
+      "val": "招喚峽谷"
+    },
+    "EDU_LEVEL": {},
+    "EDU_LEVEL1": {},
+    "EDU_LEVEL2": {
+      "act": "click"
+    },
+    "EDU_LEVEL3": {},
+    "EDU_LEVEL4": {},
+    "currentZipCode": {
+      "val": "106"
+    },
+    "currentCounty": {
+      "val": "台北市",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('currentArea', '大安區')}"
+    },
+    "currentArea": {
+      "val": "大安區",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('currentStreet', '瑞安街')}"
+    },
+    "currentStreet": {
+      "val": "瑞安街"
+    },
+    "currentAddress": {
+      "val": "公園旁邊第一條巷子走進去右轉2號1樓"
+    },
+    "LIVE_ADD_RES_TYPE": {
+      "val": "自屋無貸款"
+    },
+    "BILL_ADD": {
+      "act": "click"
+    },
+    "BILL_ADD1": {},
+    "BILL_ADD2": {},
+    "addressChoice": {},
+    "censusZipCode": {
+      "val": "106"
+    },
+    "censusCounty": {
+      "val": "新北市",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('censusArea', '林口區')}"
+    },
+    "censusArea": {
+      "val": "林口區",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('censusStreet', '中山路')}"
+    },
+    "censusStreet": {
+      "val": "中山路"
+    },
+    "censusAddress": {
+      "val": "999巷777號7樓"
+    },
+    "idInfo": {
+      "act": "click"
+    },
+    "idInfo1": {},
+    "idInfo2": {},
+    "ID_INFO_LOCATION": {
+      "val": "北市"
+    },
+    "ID_INFO_YEAR": {
+      "val": "106"
+    },
+    "ID_INFO_MONTH": {
+      "val": "3"
+    },
+    "ID_INFO_DATE": {
+      "val": "28"
+    },
+    "fundPurpose": {},
+    "fundPurpose_1": {},
+    "fundPurpose_2": {},
+    "fundPurpose_3": {},
+    "fundPurpose_4": {
+      "act": "click"
+    },
+    "fundPurpose_5": {},
+    "fundPurpose_6": {},
+    "sendbtn":{
+      "bindKey": ["13", "#{() => $('#sendBtn').click()}"]
+    }
+  },
+  "http://localhost:8031/extfunc31/page/step5?_ar=1": {
+		"runFunc": {
+	      "func": "#{() => $('.icon-plus').click()}",
+	      "pause": 500
+	    },
+		"COMPANY_NAME": {
+			"val": "販買寶劍與製作拐杖有限公司"
+		},
+		"WORK_DEP": {
+			"val": "８７部門"
+		},
+		"ANNUAL_IN": {
+			"val": "54878745"
+		},
+		"companyEmail": {
+			"val": "87Company@gmail.com"
+		},
+		"VOCATION_TYPE": {
+			"val": "軍公教",
+			"trig": "change"
+		},
+		"ACC_NAME": {
+			"val": ""
+		},
+		"JOB_TITLE": {
+			"val": "企業負責人/董監事",
+			"trig": "change"
+		},
+		"JOB_TITLE_OTHER": {
+			"val": ""
+		},
+		"OFFICE_TEL_AREA": {
+			"val": "02",
+			"trig": "change"
+		},
+		"OFFICE_TEL_TEXT": {
+			"val": "28825487"
+		},
+		"OFFICE_TEL_EXT": {
+			"val": "8787"
+		},
+		"companyZipCode": {
+			"val": "10058"
+		},
+		"companyCounty": {
+			"val": "台北市",
+			"trig": "change",
+			"wait": "#{() => waitSelectHasValue('companyArea', '中正區')}"
+		},
+		"companyArea": {
+			"val": "中正區",
+			"trig": "change",
+			"wait": "#{() => waitSelectHasValue('companyStreet', '八德路１段')}"
+		},
+		"companyStreet": {
+			"val": "八德路１段",
+			"trig": "change"
+		},
+		"companyAddress": {
+			"val": "想知道我地址請領取號碼牌"
+		},
+		"ONBOARD_YEAR": {
+			"val": "2016",
+			"trig": "change"
+		},
+		"ONBOARD_MON": {
+			"val": "",
+			"trig": "change"
+		},
+		"ONBOARD_DATE": {
+			"val": "",
+			"trig": "change"
+		},
+		"PRE_COMP_YEAR": {
+			"val": "",
+			"trig": "change"
+		},
+		"PRE_COMP_MON": {
+			"val": "",
+			"trig": "change"
+		},
+		"COMP_NO": {},
+		"COMP_NO_1": {},
+		"COMP_NO_C": {
+			"val": ""
+		},
+		"COMP_NO_2": {
+			"act": "click"
+		},
+		"CITI_ID": {
+			"val": "87879487"
+		},
+	    "sendbtn":{
+	      "bindKey": ["13", "#{() => $('#nextBtn').click()}"]
+	    }
+	},
+	"http://localhost:8031/extfunc31/page/step6?_ar=1": {
+	    "acChoose1": {
+	      "act": "click"
+	    },
+	    "otherAccountTitle": {
+	      "val": "021-花旗（台灣）銀行",
+	      "trig": "change",
+	      "wait": "#{() => waitSelectHasValue('otherBranchCode', '0018-營業部')}"
+	    },
+	    "otherBranchCode": {
+	      "val": "0018-營業部",
+	      "trig": "change"
+	    },
+	    "otherAccountNumber": {
+	      "val": "7777777777"
+	    },
+	    "eBill": {
+	      "act": "click"
+	    },
+	    "BANK_GPP_1": {
+	      "act": "click"
+	    },
+	    "BANK_GPP_0": {},
+	    "sendbtn":{
+	      "bindKey": ["13", "#{() => $('#nextBtn').click()}"]
+	    }
+	  },
+	  "http://localhost:8031/extfunc31/page/step7?_ar=1": {
+		"c1": {
+			"act": "click"
+		},
+		"c2": {
+			"act": "click"
+		},
+		"c3": {
+			"act": "click"
+		},
+		"c4": {
+			"act": "click"
+		},
+		"c5": {
+			"act": "click"
+		},
+		"c6": {
+			"act": "click"
+		},
+		"c7": {
+			"act": "click"
+		},
+		"c8": {
+			"act": "click"
+		},
+		"c9": {
+			"act": "click"
+		},
+		"c10": {
+			"act": "click"
+		},
+		"c11": {
+			"act": "click"
+		},
+		"reviewYear": {
+			"val": "#{() => new Date().getFullYear() - 1911}",
+			"trig": "change"
+		},
+		"reviewMonth": {
+			"val": "#{() => new Date().getMonth() + 1}",
+			"trig": "change"
+		},
+		"reviewDay": {
+			"val": "#{() => new Date().getDate()}",
+			"trig": "change"
+		},
+	    "sendbtn":{
+	      "bindKey": ["13", "#{() => $('#btnSubmit').click()}"]
+	    }
+	}
+}
