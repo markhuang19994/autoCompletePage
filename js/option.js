@@ -7,6 +7,7 @@
         (async () => {//page init
             $('input, textarea').attr("spellcheck", false);
             letTextAreaCanKeyTab();
+            $('span.slider-trigger').addClass('disable-text-select');
             const allProjectData = await getAllProjectData();
             refreshAutoComplete(allProjectData);
         })();

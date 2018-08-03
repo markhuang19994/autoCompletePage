@@ -126,3 +126,16 @@ button#export-all-project-data {
 .input-file-span:hover{
     background-color: #e7e7e7;
 }
+
+#del-project-data{
+    margin-left: 6px;
+}
+
+.disable-text-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
