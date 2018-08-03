@@ -113,3 +113,16 @@ button#export-all-project-data {
 #page-json-commit_div .print-message {
     width: 100%;
 }
+
+.input-file-span{
+    border: 0.5px solid black;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #ededed;
+    margin-left: 6px;
+    padding: 4px;
+}
+
+.input-file-span:hover{
+    background-color: #e7e7e7;
+}

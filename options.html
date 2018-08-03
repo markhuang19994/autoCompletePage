@@ -56,7 +56,8 @@
                                 <span>說明:</span><br/>
                                 <p>
                                     填入頁面的完整網址，在頁面載入後會自動填入資料。<br/>
-                                    Ex：https://www.google.com, http://localhost:5487/extfunc87/data/query?name=Kram,... <br/>
+                                    Ex：https://www.google.com, http://localhost:5487/extfunc87/data/query?name=Kram,...
+                                    <br/>
                                 </p>
                             </li>
                             <li>
@@ -199,8 +200,10 @@
                             </li>
                             <li>
                                 <span>匯入資料:</span>
-                                <label for="import-autocomplete-urls"></label>
-                                <input type="file" id="import-autocomplete-urls"/>
+                                <label for="import-autocomplete-urls">
+                                    <span class="input-file-span">選擇檔案</span>
+                                </label>
+                                <input type="file" id="import-autocomplete-urls" style="display: none"/>
                             </li>
                             <li>
                                 <span>匯出資料:</span>
@@ -226,8 +229,10 @@
                             </li>
                             <li>
                                 <span>匯入資料:</span>
-                                <label for="import-all-page-data"></label>
-                                <input type="file" id="import-all-page-data"/>
+                                <label for="import-all-page-data">
+                                    <span class="input-file-span">選擇檔案</span>
+                                </label>
+                                <input type="file" id="import-all-page-data" style="display: none"/>
                             </li>
                             <li>
                                 <span>匯出資料:</span>
@@ -241,12 +246,20 @@
                     <div class="slider">
                         <ul class="all-project-data_ul">
                             <li>
-                                <span>指定專案資料:</span>
-                                <label for="del-project-data"></label><input type="text" id="del-project-data" spellcheck="false">
+                                <span>刪除指定專案資料:</span>
+                                <label for="del-project-data"></label><input type="text" id="del-project-data"
+                                                                             spellcheck="false">
                                 <button id="del-project-data-commit">刪除</button>
                             </li>
+                            <li>
+                                <span>匯入所有專案資料:</span>
+                                <label for="import-all-project-data">
+                                    <span class="input-file-span">選擇檔案</span>
+                                </label>
+                                <input type="file" id="import-all-project-data" style="display: none"/>
+                            </li>
                             <li id="all-project-data-export">
-                                <span>匯出所有資料:</span>
+                                <span>匯出所有專案資料:</span>
                                 <button id="export-all-project-data">匯出</button>
                             </li>
                         </ul>
