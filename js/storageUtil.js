@@ -7,7 +7,7 @@
 
     async function getStorageData(key) {
         return new Promise(res => {
-            chrome.storage.sync.get(key, function (items) {
+            chrome.storage.local.get(key, function (items) {
                 console.log(`%cget ${key} form chrome storage: `, 'color:#b90000;');
                 console.log(JSON.stringify(items));
                 res(items);
@@ -16,7 +16,7 @@
     }
 
     function setStorageData(items) {
-        chrome.storage.sync.set(items);
+        chrome.storage.local.set(items);
         console.log(`%cset items in chrome storage: `, 'color:#b90000;');
         console.log(JSON.stringify(items));
     }

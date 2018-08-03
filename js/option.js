@@ -8,16 +8,13 @@
             $('input, textarea').attr("spellcheck", false);
             letTextAreaCanKeyTab();
             const allProjectData = await getAllProjectData();
-            autoCompleteWithZeroLength('#projectName', allProjectData);
-            autoCompleteWithZeroLength('#del-project-data', allProjectData);
+            refreshAutoComplete(allProjectData);
         })();
 
         $('#projectName').on('change autocompletechange', async e => {
             projectName = e.currentTarget.value === '' ? 'none' : e.currentTarget.value;
             const allProjectData = await getAllProjectData();
-            const allPageData = allProjectData[projectName]['allPageData'] || {};
-            autoCompleteWithZeroLength('#get-page-data', allPageData);
-            autoCompleteWithZeroLength('#del-project-data', allProjectData);
+            refreshAutoComplete(allProjectData);
         });
 
         $('.slider-trigger').click(e => {
@@ -127,8 +124,8 @@
             if (allProjectData[projectName]) {
                 delete allProjectData[projectName];
                 setStorageData({allProjectData: JSON.stringify(allProjectData)});
-                autoCompleteWithZeroLength('#projectName', allProjectData);
-                setMessageAfterElement(e, '專案已成功刪除');
+                refreshAutoComplete(allProjectData);
+                setMessageAfterElement(e, `專案${projectName}已成功刪除`);
             } else {
                 setMessageAfterElement(e, '無此專案');
             }
@@ -136,6 +133,21 @@
 
         $('#export-all-project-data').click(async () => {
             download('allPageData.json', JSON.stringify(await getAllProjectData(), null, '\t'));
+        });
+
+        $('#import-all-project-data').change(async e => {
+            readFileAsText(e.delegateTarget.files[0]).then(async result => {
+                try {
+                    let allProjectData = JSON.parse(result);
+                    setStorageData({allProjectData: JSON.stringify(allProjectData)});
+                    refreshAutoComplete(allProjectData);
+                    setMessageAfterElement(e, `檔案儲存成功`);
+                } catch (err) {
+                    setMessageAfterElement(e, `檔案轉換失敗，原因: ${err.toString()}`);
+                }
+            }).catch(err => {
+                setMessageAfterElement(e, `檔案讀取失敗，原因: ${err.toString()}`);
+            });
         });
 
         function stringWithCommaToArrayString(str) {
@@ -175,6 +187,13 @@
             }).focus(function () {
                 $(this).autocomplete('search', $(this).val());
             });
+        }
+
+        function refreshAutoComplete(allProjectData){
+            const allPageData = allProjectData[projectName]['allPageData'] || {};
+            autoCompleteWithZeroLength('#get-page-data', allPageData);
+            autoCompleteWithZeroLength('#projectName', allProjectData);
+            autoCompleteWithZeroLength('#del-project-data', allProjectData);
         }
 
         async function getAllProjectData() {

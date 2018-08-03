@@ -5,6 +5,10 @@
 
 Array.prototype.asyncForEach = function f(func) {
     return new Promise(res => {
+        if (this.length === 0) {
+            res();
+            return false;
+        }
         let arr = this;
         let len = arr.length;
         let index = 0;
