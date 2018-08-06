@@ -47,11 +47,10 @@
 
         $('#complete-url-commit').click(async e => {
             let allProjectData = await getAllProjectData();
-            let urlPatterns = $('#complete-url').val();
-            let patternsArrayString = stringWithCommaToArrayString(urlPatterns);
+            let addURL = $('#complete-url').val();
 
             allProjectData[projectName]['needCompletePages'] =
-                allProjectData[projectName]['needCompletePages'].concat(JSON.parse(patternsArrayString));
+                allProjectData[projectName]['needCompletePages'].concat([addURL]);
             setStorageData({allProjectData: JSON.stringify(allProjectData)});
             autoCompleteWithZeroLength('#remove-complete-url', allProjectData[projectName]['needCompletePages']);
             setMessageAfterElement(e, `已新增URL: ${patternsArrayString}`);
@@ -155,7 +154,7 @@
                 delete allProjectData[projectName];
                 setStorageData({allProjectData: JSON.stringify(allProjectData)});
                 refreshAutoComplete(allProjectData);
-                setMessageAfterElement(e, `專案${projectName}已成功刪除`);
+                etMessageAfterElement(e, `專案${projectName}已成功刪除`);
             } else {
                 setMessageAfterElement(e, '無此專案');
             }

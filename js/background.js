@@ -1,10 +1,10 @@
 (() => {
+    const {getStorageData, setStorageData} = window.storageUtil;
     chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         if (changeInfo.status === 'complete' && tab.active) {
             chrome.browserAction.disable(tabId);
             if (new RegExp(/chrome.*:\/\//).test(tab.url)) return;
 
-            const {getStorageData} = window.storageUtil;
             const {urlWhiteList} = await getStorageData('urlWhiteList');
             if (!isSupportPage(tab.url, urlWhiteList)) {
                 return;
@@ -44,14 +44,15 @@
         }
     });
 
-    chrome.browserAction.onClicked.addListener(function (tab) {
-        chrome.tabs.executeScript(tab.id, {
-            code: ` 
-                (() => {
-                    let data = generalPageData(window.location.href);
-                    console.log(JSON.stringify(data, null, '\t'));
-                    alert('本頁資料已顯示於console');
-                })();`
+    chrome.browserAction.onClicked.addListener(async function (tab) {
+        chrome.tabs.sendMessage(tab.id, {name: 'browserActionClick'}, async resp => {
+            if (resp['shiftKey']) {
+                const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
+                setStorageData({autoCompleteFunction: autoCompleteFunction === false});
+                alert(`已${autoCompleteFunction !== false ? '關閉' : '開啟'}頁面自動填充功能`);
+            }else if(resp['msg']){
+                alert(resp['msg']);
+            }
         });
     });
 

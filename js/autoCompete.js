@@ -74,6 +74,9 @@ $(async function () {
 
     $(document).on('keydown', e => {
         window.ctrlKey = e.ctrlKey;
+        window.shiftKey = e.shiftKey;
+        window.altKey = e.altKey;
+
         if (e.ctrlKey && e.shiftKey && e.which === 'A'.codePointAt(0)) {
             completeData(pageData);
         }
@@ -85,7 +88,11 @@ $(async function () {
         }
     });
 
-    $(document).on('keyUp', e => window.ctrlKey = e.ctrlKey);
+    $(document).on('keyUp', e => {
+        window.ctrlKey = e.ctrlKey;
+        window.shiftKey = e.shiftKey;
+        window.altKey = e.altKey;
+    });
 
     (function autoRun() {
         if (sessionStorage.getItem('isAutoRun')) {
@@ -147,4 +154,19 @@ $(async function () {
         else
             element.fireEvent(`on${triggerEvent}`);
     }
+
+    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        console.log(sender.tab ?
+            "接收來自內容腳本的訊息：" + sender.tab.url
+            : "接收來自擴充功能內部的訊息");
+        if (request.name === "browserActionClick") {
+            if (!window.shiftKey) {
+                let data = generalPageData(window.location.href);
+                console.log(JSON.stringify(data, null, '	'));
+                sendResponse({msg: '本頁資料已顯示於console'});
+            } else {
+                sendResponse({shiftKey: true});
+            }
+        }
+    });
 });
