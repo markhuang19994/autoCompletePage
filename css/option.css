@@ -102,6 +102,10 @@ button#export-all-project-data {
     font-size: 1rem;
 }
 
+#toggle-autocomplete {
+    font-size: 1.1rem;
+}
+
 #all-project-data-export {
     padding-bottom: 5px;
 }
@@ -114,7 +118,7 @@ button#export-all-project-data {
     width: 100%;
 }
 
-.input-file-span{
+.input-file-span {
     border: 0.5px solid black;
     border-radius: 4px;
     font-size: 1rem;
@@ -123,11 +127,11 @@ button#export-all-project-data {
     padding: 4px;
 }
 
-.input-file-span:hover{
+.input-file-span:hover {
     background-color: #e7e7e7;
 }
 
-#del-project-data{
+#del-project-data {
     margin-left: 6px;
 }
 

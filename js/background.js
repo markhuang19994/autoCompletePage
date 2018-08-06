@@ -20,10 +20,18 @@
             const projectInfo = getPageDataAndNeedCompletePageFromAllProjectData(allProjectData, tab.url);
 
             const needCompletePages = projectInfo['needCompletePages'];
-            let isNeedAutoComplete = isPageNeedAutoComplete(tab.url, needCompletePages);
-            chrome.tabs.executeScript(tabId, {
-                code: `window.isNeedAutoComplete = ${isNeedAutoComplete}`
-            });
+
+            const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
+            if (autoCompleteFunction !== false) {
+                const isNeedAutoComplete = isPageNeedAutoComplete(tab.url, needCompletePages);
+                chrome.tabs.executeScript(tabId, {
+                    code: `window.isNeedAutoComplete = ${isNeedAutoComplete}`
+                });
+                chrome.browserAction.setTitle({title: 'auto page complete function enable'});
+            } else {
+                chrome.browserAction.setIcon({path: './image/icon-orange.png'});
+                chrome.browserAction.setTitle({title: 'auto page complete function unable'});
+            }
 
             const pageData = projectInfo['pageData'];
             const pageDataStr = JSON.stringify(pageData);

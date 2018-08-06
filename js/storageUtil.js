@@ -13,7 +13,7 @@
                     console.log(JSON.stringify(items));
                     res(items);
                 } else {
-                    getSyncStorageData(key).then(() => res());
+                    getSyncStorageData(key).then(syncItems => res(syncItems));
                 }
             });
         })

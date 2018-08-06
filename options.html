@@ -56,14 +56,23 @@
                                 <span>說明:</span><br/>
                                 <p>
                                     填入頁面的完整網址，在頁面載入後會自動填入資料。<br/>
-                                    Ex：https://www.google.com, http://localhost:5487/extfunc87/data/query?name=Kram,...
+                                    Ex：http://localhost:5487/extfunc87/data/query?name=Kram
                                     <br/>
                                 </p>
                             </li>
                             <li>
-                                <label for="complete-url"> 網址:</label>
+                                <span>開啟/關閉此功能:</span>
+                                <button id="toggle-autocomplete">關閉</button>
+                            </li>
+                            <li>
+                                <label for="complete-url">新增頁面:</label>
                                 <input type="text" id="complete-url" spellcheck="false">
-                                <button id="complete-url-commit">確認</button>
+                                <button id="complete-url-commit">新增</button>
+                            </li>
+                            <li>
+                                <label for="remove-complete-url">刪除頁面:</label>
+                                <input type="text" id="remove-complete-url" spellcheck="false">
+                                <button id="remove-complete-url-commit">刪除</button>
                             </li>
                         </ul>
                     </div>

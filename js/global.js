@@ -25,6 +25,15 @@ Array.prototype.asyncForEach = function f(func) {
     })
 };
 
+Array.prototype.remove = function (from, to) {
+    to = to || from;
+    let newArr = this.slice();
+    let rest = newArr.slice(to + 1 || newArr.length);
+    newArr.length = from < 0 ? newArr.length + from : from;
+    newArr.push.apply(newArr, rest);
+    return newArr;
+};
+
 const pause = time => {
     return new Promise(res => setTimeout(() => res(), time));
 };

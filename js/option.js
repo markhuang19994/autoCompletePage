@@ -8,6 +8,10 @@
             $('input, textarea').attr("spellcheck", false);
             letTextAreaCanKeyTab();
             $('span.slider-trigger').addClass('disable-text-select');
+
+            const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
+            $('#toggle-autocomplete').html(autoCompleteFunction !== false ? '開啟' : '關閉');
+
             const allProjectData = await getAllProjectData();
             refreshAutoComplete(allProjectData);
         })();
@@ -45,11 +49,36 @@
             let allProjectData = await getAllProjectData();
             let urlPatterns = $('#complete-url').val();
             let patternsArrayString = stringWithCommaToArrayString(urlPatterns);
-            let message = `已設定pattern: ${patternsArrayString}`;
 
-            allProjectData[projectName]['needCompletePages'] = JSON.parse(patternsArrayString);
+            allProjectData[projectName]['needCompletePages'] =
+                allProjectData[projectName]['needCompletePages'].concat(JSON.parse(patternsArrayString));
             setStorageData({allProjectData: JSON.stringify(allProjectData)});
+            autoCompleteWithZeroLength('#remove-complete-url', allProjectData[projectName]['needCompletePages']);
+            setMessageAfterElement(e, `已新增URL: ${patternsArrayString}`);
+        });
+
+        $('#remove-complete-url-commit').click(async e => {
+            let allProjectData = await getAllProjectData();
+            let rmURL = $('#remove-complete-url').val();
+            let isRemove = false;
+
+            allProjectData[projectName]['needCompletePages'].forEach((url, index) => {
+                if (url === rmURL) {
+                    allProjectData[projectName]['needCompletePages'] = allProjectData[projectName]['needCompletePages'].remove(index);
+                    isRemove = true;
+                }
+            });
+            let message = isRemove ? `已刪除URL: ${rmURL}` : `未找到此URL: ${rmURL}`;
+            setStorageData({allProjectData: JSON.stringify(allProjectData)});
+            autoCompleteWithZeroLength('#remove-complete-url', allProjectData[projectName]['needCompletePages']);
             setMessageAfterElement(e, message);
+        });
+
+        $('#toggle-autocomplete').click(async e => {
+            const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
+            const isOpen = autoCompleteFunction !== false;
+            setStorageData({autoCompleteFunction: !isOpen});
+            e.currentTarget.innerHTML = !isOpen ? '開啟' : '關閉';
         });
 
         $('#import-autocomplete-urls').change(async e => {
@@ -183,18 +212,19 @@
 
         function autoCompleteWithZeroLength(selector, obj) {
             $(selector).autocomplete({
-                source: Object.keys(obj || {}),
+                source: Array.isArray(obj) ? obj : Object.keys(obj || {}),
                 minLength: 0
             }).focus(function () {
                 $(this).autocomplete('search', $(this).val());
             });
         }
 
-        function refreshAutoComplete(allProjectData){
+        function refreshAutoComplete(allProjectData) {
             const allPageData = allProjectData[projectName]['allPageData'] || {};
             autoCompleteWithZeroLength('#get-page-data', allPageData);
             autoCompleteWithZeroLength('#projectName', allProjectData);
             autoCompleteWithZeroLength('#del-project-data', allProjectData);
+            autoCompleteWithZeroLength('#remove-complete-url', allProjectData[projectName]['needCompletePages']);
         }
 
         async function getAllProjectData() {
