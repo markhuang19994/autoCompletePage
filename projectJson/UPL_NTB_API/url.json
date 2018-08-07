@@ -1,9 +1,9 @@
 [
-	"http://localhost:8031/extfunc31/page/index",
-	"http://localhost:8031/extfunc31/page/step1?_ar=1",
-	"http://localhost:8031/extfunc31/page/step2?_ar=1",
-	"http://localhost:8031/extfunc31/page/step4?_ar=1",
-	"http://localhost:8031/extfunc31/page/step5?_ar=1",
-	"http://localhost:8031/extfunc31/page/step6?_ar=1",
-	"http://localhost:8031/extfunc31/page/step7?_ar=1"
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/index",
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step1?_ar=1",
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step2?_ar=1",
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step4?_ar=1",
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step5?_ar=1",
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step6?_ar=1",
+	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step7?_ar=1"
 ]

@@ -126,23 +126,26 @@
                                                 <div class="slider">
                                                     <ul>
                                                         <li>
-                                                            act: click,
-                                                            blur等element可以呼叫的函數，即document.getElementById('id').act是個函數
+                                                            json最外層:不一定要用欄位id(如custName)，如果使用css選擇器比如input[name=abc]，
+                                                            那程式就會用querySelector去抓欄位
                                                         </li>
                                                         <li>
-                                                            trig: change, click等event，如需觸發keydown之類的，可以另外傳入設定值如；trig:
+                                                            act:click,blur等element可以呼叫的函數，程式內部呼叫方法:&nbsp;document.getElementById('id')[act]()
+                                                        </li>
+                                                        <li>
+                                                            trig:change, click..等event，如需觸發keydown之類的，可以另外傳入設定值如；trig:
                                                             "keydown, {which:13, shiftKey:true}"
                                                         </li>
                                                         <li>
-                                                            func: 由於json的限制，函數只能寫成一行，如: function
+                                                            func:由於json的限制，函數只能寫成一行，如: function
                                                             doSomeThing(someThing){if(typeof someThing === 'function')
                                                             doSomeThing();}
                                                         </li>
                                                         <li>
-                                                            wait: 本選項有兩個內建函數:
+                                                            wait:本選項有兩個內建函數:
                                                             <ul>
                                                                 <li>
-                                                                    等待sel有值: waitSelectHasValue(id, value)，使用方法wait:
+                                                                    等待多選框有值: waitSelectHasValue(id, value)，使用方法wait:
                                                                     "#{() => waitSelectHasValue('目標元素id', '等待出現的值')}"
                                                                 </li>
                                                                 <li>

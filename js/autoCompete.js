@@ -13,7 +13,7 @@ $(async function () {
     function completeData(pageData) {
         return Object.keys(pageData).asyncForEach(fieldName => {
             return new Promise(res => {
-                let ele = document.getElementById(fieldName);
+                let ele = document.getElementById(fieldName) || document.querySelector(fieldName);
                 const field = pageData[fieldName];
 
                 const val = field['val'];
