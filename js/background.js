@@ -3,13 +3,13 @@
     chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         if (changeInfo.status === 'complete' && tab.active) {
             chrome.browserAction.disable(tabId);
-            if (new RegExp(/chrome.*:\/\//).test(tab.url)) return;
+            if (new RegExp(/(chrome.*:\/\/)|(.*chrome.google.com.*)/).test(tab.url)) return;
 
             const {urlWhiteList} = await getStorageData('urlWhiteList');
             if (!isSupportPage(tab.url, urlWhiteList)) {
                 return;
             }
-            chrome.browserAction.setIcon({path: './image/icon.png'});
+            chrome.browserAction.setIcon({path: './image/icon.png', tabId: tab.id});
             chrome.browserAction.enable(tabId);
 
             chrome.tabs.executeScript(tabId, {file: "./js/storageUtil.js"});
@@ -19,28 +19,28 @@
             const {allProjectData} = await getStorageData('allProjectData');
             const projectInfo = getPageDataAndNeedCompletePageFromAllProjectData(allProjectData, tab.url);
             if (Object.keys(projectInfo['pageData']).length === 0) {
-                chrome.browserAction.setIcon({path: './image/icon-orange.png'});
-            }
-
-            const needCompletePages = projectInfo['needCompletePages'];
-
-            const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
-            if (autoCompleteFunction !== false) {
-                const isNeedAutoComplete = isPageNeedAutoComplete(tab.url, needCompletePages);
-                chrome.tabs.executeScript(tabId, {
-                    code: `window.isNeedAutoComplete = ${isNeedAutoComplete}`
-                });
-                chrome.browserAction.setTitle({title: 'auto page complete function enable'});
+                chrome.browserAction.setIcon({path: './image/icon-red.png', tabId: tab.id});
             } else {
-                chrome.browserAction.setIcon({path: './image/icon-yellow.png'});
-                chrome.browserAction.setTitle({title: 'auto page complete function unable'});
-            }
+                const needCompletePages = projectInfo['needCompletePages'];
 
-            const pageData = projectInfo['pageData'];
-            const pageDataStr = JSON.stringify(pageData);
-            chrome.tabs.executeScript(tabId, {
-                code: `window.pageData = ${pageDataStr ? pageDataStr.replace(/"#{(.*?)}"|\\"#{(.*?)}\\"/g, '$1') : '{}'}`
-            });
+                const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
+                if (autoCompleteFunction !== false) {
+                    const isNeedAutoComplete = isPageNeedAutoComplete(tab.url, needCompletePages);
+                    chrome.tabs.executeScript(tabId, {
+                        code: `window.isNeedAutoComplete = ${isNeedAutoComplete}`
+                    });
+                    chrome.browserAction.setTitle({title: 'auto page complete function enable'});
+                } else {
+                    chrome.browserAction.setIcon({path: './image/icon-orange.png', tabId: tab.id});
+                    chrome.browserAction.setTitle({title: 'auto page complete function unable'});
+                }
+
+                const pageData = projectInfo['pageData'];
+                const pageDataStr = JSON.stringify(pageData);
+                chrome.tabs.executeScript(tabId, {
+                    code: `window.pageData = ${pageDataStr ? pageDataStr.replace(/"#{(.*?)}"|\\"#{(.*?)}\\"/g, '$1') : '{}'}`
+                });
+            }
 
             chrome.tabs.executeScript(tabId, {file: "./js/autoCompete.js"});
             printSquare();
