@@ -18,6 +18,9 @@
 
             const {allProjectData} = await getStorageData('allProjectData');
             const projectInfo = getPageDataAndNeedCompletePageFromAllProjectData(allProjectData, tab.url);
+            if (Object.keys(projectInfo['pageData']).length === 0) {
+                chrome.browserAction.setIcon({path: './image/icon-orange.png'});
+            }
 
             const needCompletePages = projectInfo['needCompletePages'];
 
@@ -29,7 +32,7 @@
                 });
                 chrome.browserAction.setTitle({title: 'auto page complete function enable'});
             } else {
-                chrome.browserAction.setIcon({path: './image/icon-orange.png'});
+                chrome.browserAction.setIcon({path: './image/icon-yellow.png'});
                 chrome.browserAction.setTitle({title: 'auto page complete function unable'});
             }
 
@@ -50,7 +53,7 @@
                 const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
                 setStorageData({autoCompleteFunction: autoCompleteFunction === false});
                 alert(`已${autoCompleteFunction !== false ? '關閉' : '開啟'}頁面自動填充功能`);
-            }else if(resp['msg']){
+            } else if (resp['msg']) {
                 alert(resp['msg']);
             }
         });
