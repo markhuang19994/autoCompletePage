@@ -27,8 +27,12 @@ $(async function () {
                 }
 
                 const action = field['act'];
-                if (action && typeof ele[action] === 'function') {
-                    ele[action]();
+                if (action) {
+                    if (action && typeof ele[action] === 'function') {
+                        ele[action]();
+                    } else if ((ele.tagName === 'SELECT' || /radio|checkbox/g.test(ele.getAttribute('type'))) && action === '$randomChose') {
+                        randomChose(ele.id);
+                    }
                 }
 
                 const triggerEvent = field['trig'];
@@ -144,22 +148,22 @@ $(async function () {
         const allKeys = mergeArrayWithOrder(Object.keys(originPageData), Object.keys(newPageData));
         let result = {};
         allKeys.forEach(key => {
-           if(originPageData[key]){
-               result[key] = originPageData[key];
-               if (newPageData[key]) {
-                   if (newPageData[key]['val']) {
-                       result[key]['val'] = newPageData[key]['val'];
-                   }
-                   if (newPageData[key]['act']) {
-                       result[key]['act'] = newPageData[key]['act'];
-                   }
-                   if (newPageData[key]['trig']) {
-                       result[key]['trig'] = newPageData[key]['trig'];
-                   }
-               }
-           } else{
-               result[key] = newPageData[key];
-           }
+            if (originPageData[key]) {
+                result[key] = originPageData[key];
+                if (newPageData[key]) {
+                    if (newPageData[key]['val']) {
+                        result[key]['val'] = newPageData[key]['val'];
+                    }
+                    if (newPageData[key]['act']) {
+                        result[key]['act'] = newPageData[key]['act'];
+                    }
+                    if (newPageData[key]['trig']) {
+                        result[key]['trig'] = newPageData[key]['trig'];
+                    }
+                }
+            } else {
+                result[key] = newPageData[key];
+            }
         });
         return result;
     }
@@ -208,16 +212,6 @@ $(async function () {
         });
     }
 
-    function triggerHTMLEvent(element, triggerEvent) {
-        if ("createEvent" in document) {
-            let evt = document.createEvent("HTMLEvents");
-            evt.initEvent(triggerEvent, false, true);
-            element.dispatchEvent(evt);
-        }
-        else
-            element.fireEvent(`on${triggerEvent}`);
-    }
-
     chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         console.log(sender.tab ?
             "接收來自內容腳本的訊息：" + sender.tab.url
@@ -228,11 +222,11 @@ $(async function () {
                 console.log(JSON.stringify(data, null, '	'));
                 sendResponse({msg: '本頁資料已顯示於console'});
             } else {
-               if(window.shiftKey){
-                   sendResponse({shiftKey: window.shiftKey});
-               }else if(window.altKey){
-                   sendResponse({newPageData: mergePageData()});
-               }
+                if (window.shiftKey) {
+                    sendResponse({shiftKey: window.shiftKey});
+                } else if (window.altKey) {
+                    sendResponse({newPageData: mergePageData()});
+                }
             }
         }
     });

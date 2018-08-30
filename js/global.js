@@ -101,6 +101,48 @@ const letTextAreaCanKeyTab = () => {
     }
 };
 
+const triggerHTMLEvent = (element, triggerEvent) => {
+    if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent(triggerEvent, false, true);
+        element.dispatchEvent(evt);
+    }
+    else
+        element.fireEvent(`on${triggerEvent}`);
+};
+
+const choseRandomSelectOption = id => {
+    let options = Array.from(document.querySelectorAll(`#${id} option`));
+    if (options.length > 0) {
+        options = options.slice(1);
+    }
+    document.getElementById(id).value = options[~~(Math.random() * options.length)].value;
+};
+
+const choseRandomRadioOption = name => {
+    let radios = document.querySelectorAll(`input[name=${name}]`);
+    radios[~~(Math.random() * radios.length)]['click']();
+};
+
+const choseRandomCheckBoxOption = name => {
+    let checkboxs = document.querySelectorAll(`input[name=${name}]`);
+    checkboxs.forEach(checkbox => ~~(Math.random() * 2) === 0 && checkbox['click']());
+};
+
+const randomChose = id => {
+    let ele = document.getElementById(id);
+    let name = ele.getAttribute('name');
+    if (ele.tagName === 'SELECT') {
+        choseRandomSelectOption(id);
+    } else if (ele.tagName === 'INPUT') {
+        if (ele.getAttribute('type') === 'radio') {
+            choseRandomRadioOption(name);
+        } else if (ele.getAttribute('type') === 'checkbox') {
+            choseRandomCheckBoxOption(name);
+        }
+    }
+};
+
 const generateUniformNumberArray = (init, end) => {
     let result = [];
     if (init <= end) {
