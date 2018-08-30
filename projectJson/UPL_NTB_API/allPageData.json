@@ -1,21 +1,24 @@
 {
   "https://uat.newwebatm.citibank.com.tw/extfunc31/page/index": {
     "custId": {
-      "val": "M123456789"
+      "val": "#{() => generateRandomIdCardNumber()}"
     },
     "BIRTH": {
-      "val": "19800101"
+      "val": "#{() => '19' + ~~(Math.random() * 50 + 49) + fillIntegerFrontZero(~~(Math.random() * 12 + 1), 2) + fillIntegerFrontZero(~~(Math.random() * 31, 2) + 1)}"
     },
-    "sendbtn":{
-      "bindKey": ["13", "#{() => $('#sendbtn').click()}"]
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#sendbtn').click()}"
+      ]
     }
   },
   "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step1?_ar=1": {
     "custName": {
-      "val": "大中天"
+      "val": "#{() => generateRandomChinese(3)}"
     },
     "custMobile": {
-      "val": "0987878787"
+      "val": "#{() => '09' + generateRandomNumber(8)}"
     },
     "check_stu": {},
     "check_stu1": {
@@ -26,27 +29,30 @@
       "val": "1"
     },
     "yearInc": {
-      "val": "94878745"
+      "val": "1350000"
     },
     "COMP_NO_C": {
       "val": ""
     },
     "loan": {
-      "val": "948787"
+      "val": "65000"
     },
     "creditCyc": {
-      "val": "874545"
+      "val": "25000"
     },
     "moneyCard": {
-      "val": "8177818"
+      "val": "25000"
     },
-    "sendbtn":{
-      "bindKey": ["13", "#{() => $('#sendBtn').click()}"]
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#sendBtn').click()}"
+      ]
     }
   },
   "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step2?_ar=1": {
     "applyAmount": {
-      "val": "87",
+      "val": "120",
       "trig": "change"
     },
     "monthlyPayment": {
@@ -82,8 +88,11 @@
     "s2_agree3": {
       "act": "click"
     },
-    "sendbtn":{
-      "bindKey": ["13", "#{() => $('#sendBauBtn').click()}"]
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#sendBauBtn').click()}"
+      ]
     }
   },
   "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step4?_ar=1": {
@@ -91,26 +100,11 @@
       "func": "#{() => $('.icon-plus').click()}",
       "pause": 500
     },
-    "custName": {
-      "val": "大中天"
-    },
-    "custId": {
-      "val": "M123456789"
-    },
     "ENG_NAM_2": {
-      "val": "LEE"
+      "val": "MARK"
     },
     "ENG_NAM": {
-      "val": "SIN"
-    },
-    "custBirYear": {
-      "val": "87"
-    },
-    "custBirMon": {
-      "val": "3"
-    },
-    "custBirDay": {
-      "val": "25"
+      "val": "HUANG"
     },
     "custSexM": {
       "act": "click"
@@ -131,10 +125,10 @@
       "val": "0987878787"
     },
     "custMail": {
-      "val": "zxc81906@gmail.com"
+      "val": "markhuang1993@gmail.com"
     },
     "ELE_SCHOOL": {
-      "val": "招喚峽谷"
+      "val": "建安國小"
     },
     "EDU_LEVEL": {},
     "EDU_LEVEL1": {},
@@ -196,10 +190,11 @@
     "idInfo1": {},
     "idInfo2": {},
     "ID_INFO_LOCATION": {
-      "val": "北市"
+      "val": "桃園縣",
+      "trig": "change"
     },
     "ID_INFO_YEAR": {
-      "val": "106"
+      "val": "100"
     },
     "ID_INFO_MONTH": {
       "val": "3"
@@ -216,181 +211,203 @@
     },
     "fundPurpose_5": {},
     "fundPurpose_6": {},
-    "sendbtn":{
-      "bindKey": ["13", "#{() => $('#sendBtn').click()}"]
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#sendBtn').click()}"
+      ]
     }
   },
   "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step5?_ar=1": {
-		"runFunc": {
-	      "func": "#{() => $('.icon-plus').click()}",
-	      "pause": 500
-	    },
-		"COMPANY_NAME": {
-			"val": "販買寶劍與製作拐杖有限公司"
-		},
-		"WORK_DEP": {
-			"val": "８７部門"
-		},
-		"ANNUAL_IN": {
-			"val": "54878745"
-		},
-		"companyEmail": {
-			"val": "87Company@gmail.com"
-		},
-		"VOCATION_TYPE": {
-			"val": "軍公教",
-			"trig": "change"
-		},
-		"ACC_NAME": {
-			"val": ""
-		},
-		"JOB_TITLE": {
-			"val": "企業負責人/董監事",
-			"trig": "change"
-		},
-		"JOB_TITLE_OTHER": {
-			"val": ""
-		},
-		"OFFICE_TEL_AREA": {
-			"val": "02",
-			"trig": "change"
-		},
-		"OFFICE_TEL_TEXT": {
-			"val": "28825487"
-		},
-		"OFFICE_TEL_EXT": {
-			"val": "8787"
-		},
-		"companyZipCode": {
-			"val": "10058"
-		},
-		"companyCounty": {
-			"val": "台北市",
-			"trig": "change",
-			"wait": "#{() => waitSelectHasValue('companyArea', '中正區')}"
-		},
-		"companyArea": {
-			"val": "中正區",
-			"trig": "change",
-			"wait": "#{() => waitSelectHasValue('companyStreet', '八德路１段')}"
-		},
-		"companyStreet": {
-			"val": "八德路１段",
-			"trig": "change"
-		},
-		"companyAddress": {
-			"val": "想知道我地址請領取號碼牌"
-		},
-		"ONBOARD_YEAR": {
-			"val": "2016",
-			"trig": "change"
-		},
-		"ONBOARD_MON": {
-			"val": "",
-			"trig": "change"
-		},
-		"ONBOARD_DATE": {
-			"val": "",
-			"trig": "change"
-		},
-		"PRE_COMP_YEAR": {
-			"val": "",
-			"trig": "change"
-		},
-		"PRE_COMP_MON": {
-			"val": "",
-			"trig": "change"
-		},
-		"COMP_NO": {},
-		"COMP_NO_1": {},
-		"COMP_NO_C": {
-			"val": ""
-		},
-		"COMP_NO_2": {
-			"act": "click"
-		},
-		"CITI_ID": {
-			"val": "87879487"
-		},
-	    "sendbtn":{
-	      "bindKey": ["13", "#{() => $('#nextBtn').click()}"]
-	    }
-	},
-	"https://uat.newwebatm.citibank.com.tw/extfunc31/page/step6?_ar=1": {
-	    "acChoose1": {
-	      "act": "click"
-	    },
-	    "otherAccountTitle": {
-	      "val": "021-花旗（台灣）銀行",
-	      "trig": "change",
-	      "wait": "#{() => waitSelectHasValue('otherBranchCode', '0018-營業部')}"
-	    },
-	    "otherBranchCode": {
-	      "val": "0018-營業部",
-	      "trig": "change"
-	    },
-	    "otherAccountNumber": {
-	      "val": "7777777777"
-	    },
-	    "eBill": {
-	      "act": "click"
-	    },
-	    "BANK_GPP_1": {
-	      "act": "click"
-	    },
-	    "BANK_GPP_0": {},
-	    "sendbtn":{
-	      "bindKey": ["13", "#{() => $('#nextBtn').click()}"]
-	    }
-	  },
-	  "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step7?_ar=1": {
-		"c1": {
-			"act": "click"
-		},
-		"c2": {
-			"act": "click"
-		},
-		"c3": {
-			"act": "click"
-		},
-		"c4": {
-			"act": "click"
-		},
-		"c5": {
-			"act": "click"
-		},
-		"c6": {
-			"act": "click"
-		},
-		"c7": {
-			"act": "click"
-		},
-		"c8": {
-			"act": "click"
-		},
-		"c9": {
-			"act": "click"
-		},
-		"c10": {
-			"act": "click"
-		},
-		"c11": {
-			"act": "click"
-		},
-		"reviewYear": {
-			"val": "#{() => new Date().getFullYear() - 1911}",
-			"trig": "change"
-		},
-		"reviewMonth": {
-			"val": "#{() => new Date().getMonth() + 1}",
-			"trig": "change"
-		},
-		"reviewDay": {
-			"val": "#{() => new Date().getDate()}",
-			"trig": "change"
-		},
-	    "sendbtn":{
-	      "bindKey": ["13", "#{() => $('#btnSubmit').click()}"]
-	    }
-	}
+    "runFunc": {
+      "func": "#{() => $('.icon-plus').click()}",
+      "pause": 500
+    },
+    "COMPANY_NAME": {
+      "val": "#{() => generateRandomChinese(5) + '公司'}"
+    },
+    "WORK_DEP": {
+      "val": "#{() => generateRandomChinese(5) + '部門'}"
+    },
+    "ANNUAL_IN": {
+      "val": "#{() => ~~(Math.random() * 500000 + 2000000)}"
+    },
+    "companyEmail": {
+      "val": "qwert@gmail.com"
+    },
+    "VOCATION_TYPE": {
+      "val": "軍公教",
+      "trig": "change"
+    },
+    "ACC_NAME": {
+      "val": ""
+    },
+    "JOB_TITLE": {
+      "val": "企業負責人/董監事",
+      "trig": "change"
+    },
+    "JOB_TITLE_OTHER": {
+      "val": ""
+    },
+    "OFFICE_TEL_AREA": {
+      "val": "02",
+      "trig": "change"
+    },
+    "OFFICE_TEL_TEXT": {
+      "val": "#{() => generateRandomNumber(8)}"
+    },
+    "OFFICE_TEL_EXT": {
+      "val": "#{() => generateRandomNumber(4)}"
+    },
+    "companyZipCode": {
+      "val": "10058"
+    },
+    "companyCounty": {
+      "val": "台北市",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('companyArea', '中正區')}"
+    },
+    "companyArea": {
+      "val": "中正區",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('companyStreet', '八德路１段')}"
+    },
+    "companyStreet": {
+      "val": "八德路１段",
+      "trig": "change"
+    },
+    "companyAddress": {
+      "val": "想知道我地址請領取號碼牌"
+    },
+    "ONBOARD_YEAR": {
+      "val": "2011",
+      "trig": "change"
+    },
+    "ONBOARD_MON": {
+      "val": "10",
+      "trig": "change"
+    },
+    "PRE_COMP_YEAR": {
+      "val": "",
+      "trig": "change"
+    },
+    "PRE_COMP_MON": {
+      "val": "",
+      "trig": "change"
+    },
+    "COMP_NO": {
+      "act": "click"
+    },
+    "COMP_NO_1": {},
+    "COMP_NO_C": {
+      "val": ""
+    },
+    "COMP_NO_2": {},
+    "relateName1": {},
+    "relateId1": {},
+    "relateName2": {
+      "val": "#{() => generateRandomChinese(3)}"
+    },
+    "relateId2": {},
+    "relateName3": {
+      "val": "#{() => generateRandomChinese(3)}"
+    },
+    "relateId3": {},
+    "relateTitle4": {
+      "trig": "change"
+    },
+    "CITI_ID": {
+      "val": "#{() => generateRandomNumber(8)}"
+    },
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#nextBtn').click()}"
+      ]
+    }
+  },
+  "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step6?_ar=1": {
+    "acChoose1": {
+      "act": "click",
+      "wait": "#{() => waitSelectHasValue('otherAccountTitle', '006-合作金庫商業銀行')}"
+    },
+    "otherAccountTitle": {
+      "val": "006-合作金庫商業銀行",
+      "trig": "change",
+      "wait": "#{() => waitSelectHasValue('otherBranchCode', '0017-總行')}"
+    },
+    "otherBranchCode": {
+      "val": "0017-總行",
+      "trig": "change"
+    },
+    "otherAccountNumber": {
+      "val": "7777777777777"
+    },
+    "eBill": {
+      "act": "click"
+    },
+    "BANK_GPP_1": {
+      "act": "click"
+    },
+    "BANK_GPP_0": {},
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#nextBtn').click()}"
+      ]
+    }
+  },
+  "https://uat.newwebatm.citibank.com.tw/extfunc31/page/step7?_ar=1": {
+    "c1": {
+      "act": "click"
+    },
+    "c2": {
+      "act": "click"
+    },
+    "c3": {
+      "act": "click"
+    },
+    "c4": {
+      "act": "click"
+    },
+    "c5": {
+      "act": "click"
+    },
+    "c6": {
+      "act": "click"
+    },
+    "c7": {
+      "act": "click"
+    },
+    "c8": {
+      "act": "click"
+    },
+    "c9": {
+      "act": "click"
+    },
+    "c10": {
+      "act": "click"
+    },
+    "c11": {
+      "act": "click"
+    },
+    "reviewYear": {
+      "val": "#{() => new Date().getFullYear() - 1911}",
+      "trig": "change"
+    },
+    "reviewMonth": {
+      "val": "#{() => new Date().getMonth() + 1}",
+      "trig": "change"
+    },
+    "reviewDay": {
+      "val": "#{() => new Date().getDate()}",
+      "trig": "change"
+    },
+    "sendbtn": {
+      "bindKey": [
+        "13",
+        "#{() => $('#btnSubmit').click()}"
+      ]
+    }
+  }
 }

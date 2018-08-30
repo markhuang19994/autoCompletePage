@@ -13,6 +13,7 @@
             chrome.browserAction.enable(tabId);
 
             chrome.tabs.executeScript(tabId, {file: "./js/storageUtil.js"});
+            chrome.tabs.executeScript(tabId, {file: "./js/word.js"});
             chrome.tabs.executeScript(tabId, {file: "./js/global.js"});
             chrome.tabs.executeScript(tabId, {file: "./js/vendor/jquery-3.3.1.min.js"});
 
@@ -38,7 +39,14 @@
                 const pageData = projectInfo['pageData'];
                 const pageDataStr = JSON.stringify(pageData);
                 chrome.tabs.executeScript(tabId, {
-                    code: `window.pageData = ${pageDataStr ? pageDataStr.replace(/"#{(.*?)}"|\\"#{(.*?)}\\"/g, '$1') : '{}'}`
+                    code: `
+                        window.pageData = ${pageDataStr ? pageDataStr.replace(/"#{(.*?)}"|\\"#{(.*?)}\\"/g, '$1') : '{}'};
+                        window.pageDataWithoutParseFunction = ${pageDataStr ? pageDataStr : '{}'};
+                        if(!window.pageData){
+                            console.error('頁面json的function轉換失敗');
+                            window.pageData = pageDataStr;
+                        }
+                    `
                 });
             }
 
@@ -52,7 +60,21 @@
             if (resp['shiftKey']) {
                 const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
                 setStorageData({autoCompleteFunction: autoCompleteFunction === false});
+                chrome.browserAction.setIcon({
+                    path: `./image/icon${autoCompleteFunction !== false ? '-orange' : ''}.png`,
+                    tabId: tab.id
+                });
                 alert(`已${autoCompleteFunction !== false ? '關閉' : '開啟'}頁面自動填充功能`);
+            } else if (resp['newPageData']) {
+                console.log(`new page data: ${resp['newPageData']}`);
+                const {allProjectData} = await getStorageData('allProjectData');
+                const {mergeProject, newAllProjectData} = mergePageData(allProjectData, resp['newPageData'], tab.url);
+                if (mergeProject === '') {
+                    alert(`未找到與本頁面(${tab.url})對應的專案`);
+                } else {
+                    setStorageData({allProjectData: JSON.stringify(newAllProjectData)});
+                    alert(`已更新專案${mergeProject}資料`);
+                }
             } else if (resp['msg']) {
                 alert(resp['msg']);
             }
@@ -100,5 +122,21 @@
             })
         });
         return result;
+    }
+
+    function mergePageData(allProjectData, newPageData, pageUrl) {
+        let mergeProject = '';
+        let allProjectDataObj = JSON.parse(allProjectData);
+        Object.keys(allProjectDataObj).forEach(projectName => {
+            if (
+                allProjectDataObj[projectName] &&
+                allProjectDataObj[projectName]['allPageData'] &&
+                allProjectDataObj[projectName]['allPageData'][pageUrl]
+            ) {
+                allProjectDataObj[projectName]['allPageData'][pageUrl] = newPageData;
+                mergeProject = projectName;
+            }
+        });
+        return {mergeProject, newAllProjectData: allProjectDataObj};
     }
 })();

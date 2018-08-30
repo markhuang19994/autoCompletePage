@@ -161,7 +161,7 @@
         });
 
         $('#export-all-project-data').click(async () => {
-            download('allPageData.json', JSON.stringify(await getAllProjectData(), null, '\t'));
+            download('allProjectData.json', JSON.stringify(await getAllProjectData(), null, '\t'));
         });
 
         $('#import-all-project-data').change(async e => {

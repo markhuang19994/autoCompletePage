@@ -18,6 +18,11 @@ $(async function () {
 
                 const val = field['val'];
                 if (val) {
+                    if (!ele) {
+                        console.error(`錯誤,不能為不存在的欄位設定值: ` + fieldName);
+                        res();
+                        return false;
+                    }
                     ele.value = typeof val === 'function' ? val() : val;
                 }
 
@@ -88,7 +93,7 @@ $(async function () {
         }
     });
 
-    $(document).on('keyUp', e => {
+    $(document).on('keyup', e => {
         window.ctrlKey = e.ctrlKey;
         window.shiftKey = e.shiftKey;
         window.altKey = e.altKey;
@@ -133,6 +138,64 @@ $(async function () {
         return genData;
     };
 
+    function mergePageData() {
+        const newPageData = generalPageData('temp')['temp'];
+        const originPageData = window['pageDataWithoutParseFunction'] || {};
+        const allKeys = mergeArrayWithOrder(Object.keys(originPageData), Object.keys(newPageData));
+        let result = {};
+        allKeys.forEach(key => {
+           if(originPageData[key]){
+               result[key] = originPageData[key];
+               if (newPageData[key]) {
+                   if (newPageData[key]['val']) {
+                       result[key]['val'] = newPageData[key]['val'];
+                   }
+                   if (newPageData[key]['act']) {
+                       result[key]['act'] = newPageData[key]['act'];
+                   }
+                   if (newPageData[key]['trig']) {
+                       result[key]['trig'] = newPageData[key]['trig'];
+                   }
+               }
+           } else{
+               result[key] = newPageData[key];
+           }
+        });
+        return result;
+    }
+
+    function mergeArrayWithOrder(newArr, originArr) {
+        let distinctNewArr = Array.from(new Set(newArr));
+        let distinctOriginArr = Array.from(new Set(originArr));
+        let result = [];
+        let same = findArrayFirstSameValue(distinctNewArr, distinctOriginArr);
+        if (same) {
+            result = result
+                .concat(
+                    distinctNewArr
+                        .slice(0)
+                        .reverse()
+                        .slice(distinctNewArr.length - distinctNewArr.indexOf(same))
+                        .reverse()
+                ).concat(
+                    distinctOriginArr
+                        .slice(0)
+                        .reverse()
+                        .slice(distinctOriginArr.length - distinctOriginArr.indexOf(same))
+                        .reverse()
+                ).concat([same]);
+            let sliceNewArr = distinctNewArr.slice(distinctNewArr.indexOf(same) + 1);
+            let sliceOriginArr = distinctOriginArr.slice(distinctOriginArr.indexOf(same) + 1);
+            return result.concat(mergeArrayWithOrder(sliceNewArr, sliceOriginArr));
+        } else {
+            return result.concat(distinctNewArr).concat(distinctOriginArr);
+        }
+    }
+
+    function findArrayFirstSameValue(arr1, arr2) {
+        return arr1.filter(key => arr2.indexOf(key) !== -1)[0];
+    }
+
     window.printPageData = (data) => {
         console.log(`%c${JSON.stringify(data, null, '\t')}`, 'color:#b90000;display: contents;');
     };
@@ -160,12 +223,16 @@ $(async function () {
             "接收來自內容腳本的訊息：" + sender.tab.url
             : "接收來自擴充功能內部的訊息");
         if (request.name === "browserActionClick") {
-            if (!window.shiftKey) {
+            if (!window.shiftKey && !window.altKey) {
                 let data = generalPageData(window.location.href);
                 console.log(JSON.stringify(data, null, '	'));
                 sendResponse({msg: '本頁資料已顯示於console'});
             } else {
-                sendResponse({shiftKey: true});
+               if(window.shiftKey){
+                   sendResponse({shiftKey: window.shiftKey});
+               }else if(window.altKey){
+                   sendResponse({newPageData: mergePageData()});
+               }
             }
         }
     });

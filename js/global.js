@@ -100,3 +100,97 @@ const letTextAreaCanKeyTab = () => {
         }
     }
 };
+
+const generateUniformNumberArray = (init, end) => {
+    let result = [];
+    if (init <= end) {
+        for (let i = init; i <= end; i++) {
+            result.push(i);
+        }
+    } else {
+        for (let i = end; i >= init; i--) {
+            result.push(i);
+        }
+    }
+    return result;
+};
+
+function generateRandomIdCardNumber() {
+    const idFirstWordArr = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    const idFirstWordNumberArr = ["10", "11", "12", "13", "14", "15", "16", "17", "34", "18", "19", "20", "21", "22", "35", "23", "24", "25", "26", "27", "28", "29", "32", "30", "31", "33"]
+    const firstWord = getSubRandomArray(idFirstWordArr, 1).join('');
+    const secNumber = getSubRandomArray([1, 2], 1).join('');
+    const other7Number = getSubRandomArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 7).join('');
+    const lastNumber = 10 - (calcIdCard(idFirstWordNumberArr[idFirstWordArr.indexOf(firstWord)] + secNumber + other7Number) % 10);
+    return firstWord + secNumber + other7Number + lastNumber;
+}
+
+function calcIdCard(idCardWithOutCheckNum) {
+    const weighting = [1, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+    let sum = 0;
+    for (let i = 0; i < weighting.length; i++) {
+        sum += ~~idCardWithOutCheckNum[i] * weighting[i];
+    }
+    return sum;
+}
+
+const generateRandomChinese = length => {
+    let result = '';
+    let chineseRange = parseInt(parseInt('9000', 16).toString(10)) - parseInt(parseInt('4E00', 16).toString(10));
+    for (let i = 0; i < length; i++) {
+        const chineseDig = ~~(Math.random() * (chineseRange + 1) + parseInt(parseInt('4E00', 16).toString(10)));
+        const chineseUni = parseInt(chineseDig, 10).toString(16);
+        result += (unescape('%u' + chineseUni + new Array(4 - chineseUni.length + 1).join('0')));
+    }
+    return result;
+};
+
+const generateNormalChinese = length => {
+    const chinese = (normalChinese + normalName)
+        .replace(/\s/g, '')
+        .split('')
+        .filter(word => /[\u4E00-\u9000]/.test(word));
+    return getSubRandomArray(chinese, length).join('');
+};
+
+const generateNormalChineseName = nameLength => {
+    const nameFirstWordArray = normalName.replace(/\s/g, '').split('');
+    return getSubRandomArray(nameFirstWordArray, nameLength).join('');
+};
+
+const generateRandomNumber = length => {
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += ~~(Math.random() * 10 );
+    }
+    return result;
+};
+
+const generateRandomEnglishAndNumber = length => {
+    return getSubRandomArray((allNumber + allEnglish).split(''), length).join('');
+};
+
+/*
+* 以陣列中最大的長度當作基準,剩下的全部補零到基準長度
+* */
+const fillIntegerArrayFrontZero = intArray => {
+    let maxLength = 0;
+    intArray.forEach(i => {
+        let len = (i + '').length;
+        maxLength = maxLength > len ? maxLength : len;
+    });
+    return intArray.map(i => new Array(maxLength - (i + '').length + 1).join('0') + i);
+};
+
+const fillIntegerFrontZero = (i, length) => {
+    return (i + '').length < length ? new Array(length - (i + '').length + 1).join('0') + i : i;
+};
+
+const getSubRandomArray = (arr, subArrayLength) => {
+    const result = [];
+    const arrLen = arr.length;
+    for (let i = 0; i < subArrayLength; i++) {
+        result.push(arr[~~(Math.random() * arrLen)]);
+    }
+    return result;
+};
