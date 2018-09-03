@@ -196,8 +196,27 @@ const generateNormalChinese = length => {
 };
 
 const generateNormalChineseName = nameLength => {
-    const nameFirstWordArray = normalName.replace(/\s/g, '').split('');
-    return getSubRandomArray(nameFirstWordArray, nameLength).join('');
+    const nameFirstWordArray = firstName.replace(/\s/g,'').split('');
+    const nameOtherWordArray = secName.replace(/\s/g,'').split('');
+    return getSubRandomArray(nameFirstWordArray, 1).join('') + getSubRandomArray(nameOtherWordArray, nameLength -1).join('');
+};
+
+const generateRandomEmail = () => {
+   return generateRandomEnglishAndNumber(~~Math.random() * 9 + 4) + getSubRandomArray(emailHost, 1).join('');
+};
+
+const generateNormalEnglishFirstName = isBoy => {
+    if (typeof isBoy === 'undefined') {
+        return generateNormalEnglishFirstName((~~(Math.random() * 2) === 1));
+    } else if (isBoy) {
+        return getSubRandomArray(girlsEngFirstName, 1).join('');
+    } else {
+        return getSubRandomArray(boysEngFirstName, 1).join('');
+    }
+};
+
+const generateNormalEnglishLastName = () => {
+    return getSubRandomArray(engLastName, 1).join('');
 };
 
 const generateRandomNumber = length => {

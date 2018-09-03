@@ -5,6 +5,7 @@
 $(async function () {
     //目前allPageData由background.js取得後直接放入全域變數,因為chrome.tabs.executeScript可以直接eval function
     let pageData = window['pageData'];
+    let environment = [];
 
     if (window['isNeedAutoComplete']) {
         completeData(pageData);
@@ -55,12 +56,17 @@ $(async function () {
                             if (key === 'shiftKey' || key === 'ctrlKey' || key === 'altKey') {
                                 isMatch = e[key];
                             } else {
-                                let code = isNaN(key) ? key.toUpperCase().charCodeAt(0) : ~~key;
+                                let code = isNaN(~~key) ? key.toUpperCase().charCodeAt(0) : ~~key;
                                 isMatch = e.which === code;
                             }
                         });
                         isMatch && bindKey[1]();
                     });
+                }
+
+                const env = field['env'];
+                if (env) {
+                    env.forEach(globalVar => window[globalVar[0]] = globalVar[1]);
                 }
 
                 const waitFunc = field['wait'];
