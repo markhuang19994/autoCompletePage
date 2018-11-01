@@ -24,7 +24,10 @@ $(async function () {
                         res();
                         return false;
                     }
+                    triggerHTMLEvent(ele, 'focus');
                     ele.value = typeof val === 'function' ? val() : val;
+                    triggerHTMLEvent(ele, 'change');
+                    triggerHTMLEvent(ele, 'blur');
                 }
 
                 const action = field['act'];
@@ -38,7 +41,7 @@ $(async function () {
 
                 const triggerEvent = field['trig'];
                 if (triggerEvent) {
-                    triggerHTMLEvent(ele, triggerEvent)
+                    triggerHTMLEvent(ele, triggerEvent);
                 }
 
                 const execFunction = field['func'];
