@@ -57,6 +57,7 @@
 
     chrome.browserAction.onClicked.addListener(async function (tab) {
         chrome.tabs.sendMessage(tab.id, {name: 'browserActionClick'}, async resp => {
+            if (!resp) return;
             if (resp['shiftKey']) {
                 const {autoCompleteFunction} = await getStorageData('autoCompleteFunction');
                 setStorageData({autoCompleteFunction: autoCompleteFunction === false});

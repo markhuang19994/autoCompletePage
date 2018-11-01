@@ -153,11 +153,17 @@ $(async function () {
         const originPageData = window['pageDataWithoutParseFunction'] || {};
         const allKeys = mergeArrayWithOrder(Object.keys(originPageData), Object.keys(newPageData));
         let result = {};
+        let randomActionFieldIds = [];
         allKeys.forEach(key => {
             if (originPageData[key]) {
-                result[key] = originPageData[key];
+                if (!!document.getElementById(key) || (!originPageData[key]['val'] && !originPageData[key]['act'])) {
+                    result[key] = originPageData[key];
+                }
+                if (originPageData[key]['act'] === '$randomChose') {
+                    randomActionFieldIds.push(key);
+                }
                 if (newPageData[key]) {
-                    if (newPageData[key]['val']) {
+                    if (newPageData[key]['val'] && !isFunctionInJSON(originPageData[key]['val'])) {
                         result[key]['val'] = newPageData[key]['val'];
                     }
                     if (newPageData[key]['act']) {
@@ -171,7 +177,23 @@ $(async function () {
                 result[key] = newPageData[key];
             }
         });
+
+        randomActionFieldIds.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+            const name = field.name;
+            const type = field.type;
+            if (!/radio|checkbox/g.test(type)) return;
+            Array.from(document.querySelectorAll(`input[name=${name}]`)).forEach(inputField => {
+                if (inputField.id === fieldId || !result[inputField.id] || !result[inputField.id]['act']) return;
+                delete result[inputField.id]['act'];
+            });
+        });
         return result;
+    }
+
+    function isFunctionInJSON(text) {
+        return /\s?#{\s?\(\)\s?=>.*?}\s?/.test(text);//test: #{ () => xxx}
     }
 
     function mergeArrayWithOrder(newArr, originArr) {

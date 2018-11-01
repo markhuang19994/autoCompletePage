@@ -154,7 +154,7 @@
                 delete allProjectData[projectName];
                 setStorageData({allProjectData: JSON.stringify(allProjectData)});
                 refreshAutoComplete(allProjectData);
-                etMessageAfterElement(e, `專案${projectName}已成功刪除`);
+                setMessageAfterElement(e, `專案${projectName}已成功刪除`);
             } else {
                 setMessageAfterElement(e, '無此專案');
             }
@@ -219,7 +219,7 @@
         }
 
         function refreshAutoComplete(allProjectData) {
-            const allPageData = allProjectData[projectName]['allPageData'] || {};
+            const allPageData = $.extend(true, {}, {[projectName]: {allPageData: {}}}, allProjectData)[projectName]['allPageData'];
             autoCompleteWithZeroLength('#get-page-data', allPageData);
             autoCompleteWithZeroLength('#projectName', allProjectData);
             autoCompleteWithZeroLength('#del-project-data', allProjectData);
